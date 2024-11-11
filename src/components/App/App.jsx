@@ -1,35 +1,32 @@
-import { useState } from 'react';
-import reactLogo from '../../assets/react.svg';
-import viteLogo from '../../../public/vite.svg';
-import './App.css';
+import { Routes, Route, NavLink } from 'react-router-dom';
+import Home from '../Home/Home.jsx';
+import Catalog from '../Catalog/Catalog.jsx';
+import clsx from 'clsx';
+import css from '../App/App.module.css';
+// import Products from 'path/to/pages/Products';
+// import NotFound from 'path/to/pages/NotFound';
 
-function App() {
-  const [count, setCount] = useState(0);
+const buildLinkClass = ({ isActive }) => {
+  return clsx(css.link, isActive && css.active);
+};
 
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount(count => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <nav className={css.nav}>
+        <NavLink to="/" className={buildLinkClass}>
+          Home
+        </NavLink>
+        <NavLink to="/catalog" className={buildLinkClass}>
+          Сatalog
+        </NavLink>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/catalog" element={<Catalog />} />
+        {/* <Route path="/products" element={<Products />} />
+        <Route path="*" element={<NotFound />} /> */}
+      </Routes>
+    </div>
   );
 }
-
-export default App;

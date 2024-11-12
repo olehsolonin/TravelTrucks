@@ -12,20 +12,25 @@ const buildLinkClass = ({ isActive }) => {
 
 export default function App() {
   return (
-    <div>
-      <nav className={css.nav}>
-        <NavLink to="/" className={buildLinkClass}>
-          Home
-        </NavLink>
-        <NavLink to="/catalog" className={buildLinkClass}>
-          Сatalog
-        </NavLink>
-      </nav>
+    <div className={css.container}>
+      <header className={css.header}>
+        <svg width="136" height="16">
+          <use href="../../img/symbol-defs.svg#icon-Logo"></use>
+        </svg>
+        <nav className={css.nav}>
+          <NavLink to="/" className={buildLinkClass}>
+            Home
+          </NavLink>
+          <NavLink to="/catalog" className={buildLinkClass}>
+            Сatalog
+          </NavLink>
+        </nav>
+      </header>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/catalog" element={<Catalog />} />
         {/* <Route path="/products" element={<Products />} />
-        <Route path="*" element={<NotFound />} /> */}
+	        <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </div>
   );

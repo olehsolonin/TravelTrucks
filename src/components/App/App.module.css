@@ -41,6 +41,11 @@
   color: #888;
 } */
 
+.container {
+  width: 1440px;
+  margin: 0 auto;
+}
+
 .nav {
   display: flex;
   gap: 4px;
@@ -57,4 +62,15 @@
 
 .active {
   color: orange;
+}
+
+.header {
+  border-bottom: 1px solid #f2f4f7;
+  padding: 24px 64px;
+  width: 1440px;
+  height: 72px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }

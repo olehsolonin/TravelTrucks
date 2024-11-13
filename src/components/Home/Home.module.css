@@ -4,14 +4,19 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  height: 696px;
+  /* box-sizing: border-box; */
 }
 
 .mainTitle {
   font-family: 'Inter', sans-serif;
   font-weight: 600;
-  font-size: 48px;
+  font-size: 46px;
   line-height: 67%;
   color: #f7f7f7;
+  width: 571px;
+  height: 32px;
+  margin-bottom: 16px;
 }
 
 .text {
@@ -20,4 +25,21 @@
   font-size: 24px;
   line-height: 133%;
   color: #f7f7f7;
+  margin: 0;
+  margin-bottom: 40px;
+}
+
+.btn {
+  border-radius: 200px;
+  padding: 16px 48px;
+  width: 173px;
+  height: 56px;
+  background-color: #e44848;
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+  color: #fff;
 }

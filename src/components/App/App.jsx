@@ -3,6 +3,7 @@ import Home from '../Home/Home.jsx';
 import Catalog from '../Catalog/Catalog.jsx';
 import clsx from 'clsx';
 import css from '../App/App.module.css';
+import logo from '../../img/Logo.svg';
 // import Products from 'path/to/pages/Products';
 // import NotFound from 'path/to/pages/NotFound';
 
@@ -14,9 +15,14 @@ export default function App() {
   return (
     <div className={css.container}>
       <header className={css.header}>
-        <svg width="136" height="16">
-          <use href="../../img/symbol-defs.svg#icon-Logo"></use>
-        </svg>
+        <img
+          className={css.desktopHeaderLogo}
+          width="136"
+          height="16"
+          src={logo}
+          alt="Logo"
+        />
+
         <nav className={css.nav}>
           <NavLink to="/" className={buildLinkClass}>
             Home

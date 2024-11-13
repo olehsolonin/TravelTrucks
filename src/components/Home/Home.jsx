@@ -15,7 +15,7 @@ export default function Home() {
         You can find everything you want in our catalog
       </p>
       <button className={css.btn} onClick={handleButtonClick}>
-        Try tracker
+        View Now
       </button>
     </div>
   );

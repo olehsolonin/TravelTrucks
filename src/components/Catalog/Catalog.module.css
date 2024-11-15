@@ -1,0 +1,19 @@
+.catalogContainer {
+  width: 888px;
+}
+
+.catalogItem {
+  height: 368px;
+  padding: 24px;
+}
+
+.imgContainer {
+  width: 292px;
+  height: 320px;
+}
+
+.catalogPhoto {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}

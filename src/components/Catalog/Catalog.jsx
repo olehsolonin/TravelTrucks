@@ -22,8 +22,37 @@ export default function Catalog() {
   }, []);
 
   return (
-    <div>
-      <h1>Latest articles</h1>
+    <div className={css.mainCatalogContainer}>
+      <div className={css.filtersColumn}>
+        <div className={css.locationBox}>
+          <p className={css.locationTitle}>Location</p>
+          <input type="text" className={css.locationInput} />
+        </div>
+        <p className={css.filtersTitle}>Filters</p>
+        <div className={css.vehicleEquipmentContainer}>
+          <p className={css.equipmentTitle}>Vehicle equipment</p>
+          <hr />
+          <ul className={css.filterBlocksContainer}>
+            <li className={css.filterItemBlocks}>AC</li>
+            <li className={css.filterItemBlocks}>Automatic</li>
+            <li className={css.filterItemBlocks}>Kitchen</li>
+            <li className={css.filterItemBlocks}>TV</li>
+            <li className={css.filterItemBlocks}>Bathroom</li>
+          </ul>
+        </div>
+        <div className={css.vehicleTypeContainer}>
+          <p className={css.equipmentTitle}>Vehicle type</p>
+          <hr />
+          <ul className={css.typeBlocksContainer}>
+            <li className={css.filterItemBlocks}>Van</li>
+            <li className={css.filterItemBlocks}>Fully Integrated</li>
+            <li className={css.filterItemBlocks}>Alcove</li>
+          </ul>
+        </div>
+        <button type="submit" className={css.buttonSearch}>
+          Search
+        </button>
+      </div>
 
       {data.length > 0 && (
         <ul className={css.catalogContainer}>

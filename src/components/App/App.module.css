@@ -99,13 +99,12 @@ body {
   border-bottom: 1px solid #f2f4f7;
   padding: 24px 64px;
   width: 1440px;
+  margin: 0 auto;
   height: 72px;
   display: flex;
   flex-direction: row;
-  /* justify-content: center; */
   align-items: center;
   background-color: #f7f7f7;
-  box-sizing: border-box;
 }
 
 .desktopHeaderLogo {

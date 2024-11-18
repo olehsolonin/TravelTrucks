@@ -56,26 +56,59 @@ export default function Catalog() {
 
       {data.length > 0 && (
         <ul className={css.catalogContainer}>
-          {data.map(({ id, gallery, name }) => (
-            <li key={id} className={css.catalogItem}>
-              {/* <a
-                href={gallery[0].original}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                {name}
-              </a> */}
-              <div className={css.imgContainer}>
-                <img
-                  src={gallery[0].thumb}
-                  alt="photo"
-                  className={css.catalogPhoto}
-                  width="292"
-                  height="320"
-                />
-              </div>
-            </li>
-          ))}
+          {data.map(
+            ({
+              id,
+              gallery,
+              name,
+              price,
+              rating,
+              reviews,
+              location,
+              description,
+            }) => (
+              <li key={id} className={css.catalogItem}>
+                <div className={css.imgContainer}>
+                  <img
+                    src={gallery[0].thumb}
+                    alt="photo"
+                    className={css.catalogPhoto}
+                    width="292"
+                    height="320"
+                  />
+                </div>
+                <div className={css.detailsContainer}>
+                  <div className={css.namePrice}>
+                    <div className={css.priceName}>
+                      <p className={css.nameTitle}>{name}</p>
+                      <p>{price}</p>
+                    </div>
+                    <div className={css.ratingLocation}>
+                      <p>
+                        {rating} <span>({reviews.length}Reviews)</span>
+                      </p>
+                      <p>{location}</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className={css.descriptionText}>{description}</p>
+                  </div>
+                  <div>
+                    <ul className={css.filterIconsContainer}>
+                      <li className={css.filterIcons}>Automatic</li>
+                      <li className={css.filterIcons}>Petrol</li>
+                      <li className={css.filterIcons}>Kitchen</li>
+                      <li className={css.filterIcons}>AC</li>
+                    </ul>
+                  </div>
+                  <button type="submit" className={css.buttonSearchCatalog}>
+                    Show more
+                  </button>
+                </div>
+              </li>
+            )
+          )}
         </ul>
       )}
     </div>

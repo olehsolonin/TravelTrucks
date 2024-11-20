@@ -1,25 +1,40 @@
 import { useEffect, useState } from 'react';
 import { fetchCatalog } from '../../fetchReq.js';
 import css from '../Catalog/Catalog.module.css';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function Catalog() {
-  const [data, setData] = useState([]);
+  // підписка на стор (Для того щоб в компоненті отримати дані зі стору, у бібліотеці React Redux є хук useSelector(selector).)
+
+  const currentFetchData = useSelector(state => state.data.items);
+
+  // Фабрика екшенів, створили відповідний екшен для зміни
+
+  const getCatalog = caravanCatalog => {
+    return {
+      type: 'data/addCatalog',
+      payload: caravanCatalog,
+    };
+  };
+
+  // створюємо dispatchс для подальшої відправки екнешнів
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function getAllCatalog() {
       try {
         const res = await fetchCatalog();
-        setData(res.items);
-        console.log(res);
-
-        //   setTotalPages(data.total_pages);
+        // використовуємо діспатч і відправляємо екшен в стор для обробки редюсером.
+        dispatch(getCatalog(res.items));
+        return res.items;
       } catch (error) {
         console.log(error);
       }
     }
 
     getAllCatalog();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={css.mainCatalogContainer}>
@@ -54,9 +69,9 @@ export default function Catalog() {
         </button>
       </div>
 
-      {data.length > 0 && (
+      {currentFetchData.length > 0 && (
         <ul className={css.catalogContainer}>
-          {data.map(
+          {currentFetchData.map(
             ({
               id,
               gallery,

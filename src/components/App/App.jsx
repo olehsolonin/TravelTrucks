@@ -1,6 +1,7 @@
 import { Routes, Route, NavLink } from 'react-router-dom';
 import Home from '../Home/Home.jsx';
 import Catalog from '../Catalog/Catalog.jsx';
+import TravelTruckDetails from '../TravelTruckDetails/TravelTruckDetails.jsx';
 import clsx from 'clsx';
 import css from '../App/App.module.css';
 import logo from '../../img/Logo.svg';
@@ -35,6 +36,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/catalog" element={<Catalog />} />
+        <Route path="/catalog/:id" element={<TravelTruckDetails />} />
         {/* <Route path="/products" element={<Products />} />
 	        <Route path="*" element={<NotFound />} /> */}
       </Routes>

@@ -2,8 +2,16 @@ import { useEffect, useState } from 'react';
 import { fetchCatalog } from '../../fetchReq.js';
 import css from '../Catalog/Catalog.module.css';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export default function Catalog() {
+  const [caravanId, setCaravanId] = useState(0);
+  const navigate = useNavigate();
+
+  const showMoreBtn = id => {
+    navigate(`/catalog/${id}`);
+  };
+
   // підписка на стор (Для того щоб в компоненті отримати дані зі стору, у бібліотеці React Redux є хук useSelector(selector).)
 
   const currentFetchData = useSelector(state => state.data.items);
@@ -25,6 +33,7 @@ export default function Catalog() {
     async function getAllCatalog() {
       try {
         const res = await fetchCatalog();
+        console.log(res.items);
         // використовуємо діспатч і відправляємо екшен в стор для обробки редюсером.
         dispatch(getCatalog(res.items));
         return res.items;
@@ -82,6 +91,7 @@ export default function Catalog() {
               location,
               description,
             }) => (
+              //   setCaravanId(id),
               <li key={id} className={css.catalogItem}>
                 <div className={css.imgContainer}>
                   <img
@@ -117,7 +127,11 @@ export default function Catalog() {
                       <li className={css.filterIcons}>AC</li>
                     </ul>
                   </div>
-                  <button type="submit" className={css.buttonSearchCatalog}>
+                  <button
+                    type="submit"
+                    className={css.buttonSearchCatalog}
+                    onClick={() => showMoreBtn(id)}
+                  >
                     Show more
                   </button>
                 </div>

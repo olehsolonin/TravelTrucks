@@ -8,3 +8,9 @@ export const fetchCatalog = async () => {
 	return response.data;
 
 };
+
+export const getOneCarDetails = async (id) => {
+	const response = await axios.get(`/${id}`);
+	return response;
+
+};

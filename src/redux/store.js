@@ -9,6 +9,9 @@ export const initialState = {
 	filters: {
 		status: 'all',
 	},
+	details: {
+		items: {},
+	},
 };
 
 // Поки що використовуємо редюсер який

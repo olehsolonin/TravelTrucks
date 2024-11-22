@@ -1,0 +1,5 @@
+.mainDetailContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 48px 64px 80px 64px;
+}

@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { fetchCatalog } from '../../fetchReq.js';
 import css from '../Catalog/Catalog.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 export default function Catalog() {
-  const [caravanId, setCaravanId] = useState(0);
   const navigate = useNavigate();
 
+  // роблю навігацію з загального каталогу, на сторінку конкретного авто
   const showMoreBtn = id => {
     navigate(`/catalog/${id}`);
   };

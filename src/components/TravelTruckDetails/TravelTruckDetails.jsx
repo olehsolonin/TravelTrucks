@@ -2,11 +2,23 @@ import { useParams } from 'react-router-dom';
 // import React from 'react';
 import { getOneCarDetails } from '../../fetchReq.js';
 import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import css from './TravelTruckDetails.module.css';
 
 export default function TravelTruckDetails() {
   const { id } = useParams();
   console.log(id);
+
+  const allDetails = useSelector(state => state.details.items);
+
+  const addDetails = caravanDetails => {
+    return {
+      type: 'details/addDetails',
+      payload: caravanDetails,
+    };
+  };
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function getAllDetailsAboutCar() {
@@ -14,14 +26,15 @@ export default function TravelTruckDetails() {
         const res = await getOneCarDetails(id);
         console.log(res.data);
         // використовуємо діспатч і відправляємо екшен в стор для обробки редюсером.
-        return res.items;
+        dispatch(addDetails(res.data));
+        return res.data;
       } catch (error) {
         console.log(error);
       }
     }
 
     getAllDetailsAboutCar();
-  }, [id]);
+  }, [id, dispatch]);
 
   //   console.log(res);
   return (

@@ -9,6 +9,7 @@ export default function TravelTruckDetails() {
   const { id } = useParams();
   console.log(id);
 
+  //підписка і отримання даних зі стору з станом.
   const allDetails = useSelector(state => state.details.items);
 
   const addDetails = caravanDetails => {
@@ -36,23 +37,71 @@ export default function TravelTruckDetails() {
     getAllDetailsAboutCar();
   }, [id, dispatch]);
 
-  //   console.log(res);
+  if (!allDetails || allDetails.length === 0) {
+    return <p>Loading details...</p>;
+  }
+
+  const {
+    name,
+    price,
+    rating,
+    location,
+    description,
+    form,
+    length,
+    width,
+    height,
+    tank,
+    consumption,
+    transmission,
+    engine,
+    AC,
+    bathroom,
+    kitchen,
+    TV,
+    radio,
+    refrigerator,
+    microwave,
+    gas,
+    water,
+    gallery = [],
+    reviews = [],
+  } = allDetails;
   return (
     <div className={css.mainDetailContainer}>
-      <p> Now showing product with id - {id}</p>
-      {/* <div className={css.detailsContainer}>
-                  <div className={css.namePrice}>
-                    <div className={css.priceName}>
-                      <p className={css.nameTitle}>{name}</p>
-                      <p>{price}</p>
-                    </div>
-                    <div className={css.ratingLocation}>
-                      <p>
-                        {rating} <span>({reviews.length}Reviews)</span>
-                      </p>
-                      <p>{location}</p>
-                    </div>
-                  </div> */}
+      <div className={css.detailsContainer}>
+        <div className={css.namePrice}>
+          <div className={css.priceName}>
+            <p className={css.nameTitle}>{name}</p>
+          </div>
+          <div className={css.ratingLocation}>
+            <div className={css.ratingPart}>
+              <p>
+                {rating} <span>({reviews?.length || 0} Reviews)</span>
+              </p>
+              <p>{location}</p>
+            </div>
+            <p>{price}</p>
+          </div>
+        </div>
+      </div>
+      <div className={css.photoDetails}>
+        {gallery.length > 0 ? (
+          gallery.map((photo, index) => (
+            <img
+              key={index}
+              src={photo.thumb || ''}
+              alt={`photo-${index}`}
+              className={css.photoDetailsImg}
+            />
+          ))
+        ) : (
+          <p>No photos available</p>
+        )}
+      </div>
+      <div className={css.descriptionDetails}>
+        <p>{description}</p>
+      </div>
     </div>
   );
 }

@@ -19,6 +19,7 @@
 .imgContainer {
   width: 292px;
   height: 320px;
+  object-fit: cover;
 }
 
 .catalogPhoto {

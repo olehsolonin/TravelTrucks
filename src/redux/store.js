@@ -10,7 +10,7 @@ export const initialState = {
 		status: 'all',
 	},
 	details: {
-		items: {},
+		items: null,
 	},
 };
 
@@ -26,10 +26,19 @@ const rootReducer = (state = initialState, action) => {
 					items: action.payload,
 				},
 			};
+		case 'details/addDetails':
+			return {
+				...state,
+				details: {
+					...state.details,
+					items: action.payload,
+				},
+			};
 		default:
 			return state;
 	}
 };
+
 
 export const store = configureStore({
 	reducer: rootReducer,

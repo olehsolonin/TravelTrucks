@@ -3,3 +3,63 @@
   flex-direction: column;
   padding: 48px 64px 80px 64px;
 }
+
+.detailsContainer {
+  width: 524px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.namePrice {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.priceName {
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 133%;
+  color: #101828;
+}
+
+.ratingLocation {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #101828;
+}
+
+.ratingPart {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.photoDetails {
+  display: flex;
+  flex-direction: row;
+  gap: 48px;
+  margin-bottom: 28px;
+}
+
+.photoDetailsImg {
+  border-radius: 10px;
+  width: 292px;
+  height: 312px;
+  object-fit: cover;
+}
+
+.descriptionDetails {
+  margin-bottom: 62px;
+}

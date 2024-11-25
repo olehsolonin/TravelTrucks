@@ -63,3 +63,14 @@
 .descriptionDetails {
   margin-bottom: 62px;
 }
+
+.moreInfoDetails {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.line {
+  margin-bottom: 42px;
+}

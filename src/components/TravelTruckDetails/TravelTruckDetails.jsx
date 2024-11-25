@@ -1,4 +1,5 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Routes, Route, NavLink, Outlet, Link } from 'react-router-dom';
 // import React from 'react';
 import { getOneCarDetails } from '../../fetchReq.js';
 import { useEffect } from 'react';
@@ -102,6 +103,12 @@ export default function TravelTruckDetails() {
       <div className={css.descriptionDetails}>
         <p>{description}</p>
       </div>
+      <div className={css.moreInfoDetails}>
+        <Link to="Features">Features</Link>
+        <Link to="Reviews">Reviews</Link>
+      </div>
+      <hr className={css.line} />
+      <Outlet />
     </div>
   );
 }

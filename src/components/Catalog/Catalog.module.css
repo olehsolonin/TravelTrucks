@@ -88,7 +88,7 @@ hr {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px;
 }
 
 .filterItemBlocks {
@@ -216,4 +216,46 @@ hr {
   line-height: 150%;
   text-align: center;
   color: #101828;
+}
+
+.checkboxContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 96px;
+}
+
+.hiddenCheckbox {
+  display: none;
+}
+
+.customCheckbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 112px; /* Ширина чекбокса */
+  height: 96px; /* Высота чекбокса */
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  transition: border-color 0.3s ease;
+}
+
+.hiddenCheckbox:checked + .customCheckbox {
+  border-color: orange;
+  background-color: #fff8e1;
+}
+
+.customCheckbox:hover {
+  border-color: #999;
+}
+
+.filterBlocksContainerType {
+  height: 96px;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
 }

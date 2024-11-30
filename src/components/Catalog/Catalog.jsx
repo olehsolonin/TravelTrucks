@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useId } from 'react';
 import { fetchCatalog } from '../../fetchReq.js';
 import css from '../Catalog/Catalog.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Formik, Form, Field } from 'formik';
 
 export default function Catalog() {
   const navigate = useNavigate();
@@ -45,10 +46,20 @@ export default function Catalog() {
     getAllCatalog();
   }, [dispatch]);
 
+  const LocationId = useId();
+  const ACId = useId();
+  const AutomaticId = useId();
+  const KitchenId = useId();
+  const TVId = useId();
+  const BathroomId = useId();
+  const VanId = useId();
+  const FullyIntegratedId = useId();
+  const AlcoveId = useId();
+
   return (
     <div className={css.mainCatalogContainer}>
       <div className={css.filtersColumn}>
-        <div className={css.locationBox}>
+        {/* <div className={css.locationBox}>
           <p className={css.locationTitle}>Location</p>
           <input type="text" className={css.locationInput} />
         </div>
@@ -75,7 +86,132 @@ export default function Catalog() {
         </div>
         <button type="submit" className={css.buttonSearch}>
           Search
-        </button>
+        </button> */}
+        <Formik initialValues={{}} onSubmit={() => {}}>
+          <Form>
+            <div className={css.locationBox}>
+              <p className={css.locationTitle}>Location</p>
+              <label htmlFor={LocationId}></label>
+              <Field
+                type="text"
+                name="Location"
+                id={LocationId}
+                className={css.locationInput}
+              />
+            </div>
+            <p className={css.filtersTitle}>Filters</p>
+            <div className={css.vehicleEquipmentContainer}>
+              <p className={css.equipmentTitle}>Vehicle equipment</p>
+              <hr />
+              <div className={css.filterBlocksContainer}>
+                <div className={css.checkboxContainer}>
+                  <label htmlFor={ACId} className={css.customCheckbox}>
+                    AC
+                  </label>
+                  <Field
+                    type="checkbox"
+                    name="AC"
+                    id={ACId}
+                    className={css.hiddenCheckbox}
+                  />
+                </div>
+
+                <div className={css.checkboxContainer}>
+                  <label htmlFor={AutomaticId} className={css.customCheckbox}>
+                    Email
+                  </label>
+                  <Field
+                    type="checkbox"
+                    name="Automatic"
+                    id={AutomaticId}
+                    className={css.hiddenCheckbox}
+                  />
+                </div>
+
+                <div className={css.checkboxContainer}>
+                  <label htmlFor={KitchenId} className={css.customCheckbox}>
+                    Kitchen
+                  </label>
+                  <Field
+                    type="checkbox"
+                    name="Kitchen"
+                    id={KitchenId}
+                    className={css.hiddenCheckbox}
+                  />
+                </div>
+
+                <div className={css.checkboxContainer}>
+                  <label htmlFor={TVId} className={css.customCheckbox}>
+                    TV
+                  </label>
+                  <Field
+                    type="checkbox"
+                    name="TV"
+                    id={TVId}
+                    className={css.hiddenCheckbox}
+                  />
+                </div>
+
+                <div className={css.checkboxContainer}>
+                  <label htmlFor={BathroomId} className={css.customCheckbox}>
+                    Bathroom
+                  </label>
+                  <Field
+                    type="checkbox"
+                    name="Bathroom"
+                    id={BathroomId}
+                    className={css.hiddenCheckbox}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className={css.vehicleTypeContainer}>
+              <p className={css.equipmentTitle}>Vehicle type</p>
+              <hr />
+              <div className={css.filterBlocksContainerType}>
+                <div className={css.checkboxContainer}>
+                  <label htmlFor={VanId} className={css.customCheckbox}>
+                    Van
+                  </label>
+                  <Field
+                    type="checkbox"
+                    name="Van"
+                    id={VanId}
+                    className={css.hiddenCheckbox}
+                  />
+                </div>
+                <div className={css.checkboxContainer}>
+                  <label
+                    htmlFor={FullyIntegratedId}
+                    className={css.customCheckbox}
+                  >
+                    Fully Integrated
+                  </label>
+                  <Field
+                    type="checkbox"
+                    name="FullyIntegrated"
+                    id={FullyIntegratedId}
+                    className={css.hiddenCheckbox}
+                  />
+                </div>
+                <div className={css.checkboxContainer}>
+                  <label htmlFor={AlcoveId} className={css.customCheckbox}>
+                    Alcove
+                  </label>
+                  <Field
+                    type="checkbox"
+                    name="Alcove"
+                    id={AlcoveId}
+                    className={css.hiddenCheckbox}
+                  />
+                </div>
+              </div>
+            </div>
+            <button type="submit" className={css.buttonSearch}>
+              Search
+            </button>
+          </Form>
+        </Formik>
       </div>
 
       {currentFetchData.length > 0 && (

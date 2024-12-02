@@ -62,13 +62,14 @@ export default function Catalog() {
     //  console.log(filtersString);
     const res = await getFilteredRequest(values);
     console.log(res.items);
+    dispatch(getCatalog(res.items));
     actions.resetForm();
     return res.items;
   };
 
   const LocationId = useId();
   const ACId = useId();
-  const AutomaticId = useId();
+  const TransmissionId = useId();
   const KitchenId = useId();
   const TVId = useId();
   const BathroomId = useId();
@@ -79,7 +80,7 @@ export default function Catalog() {
   const initialValues = {
     location: '',
     AC: '',
-    automatic: '',
+    transmission: '',
     kitchen: '',
     TV: '',
     bathroom: '',
@@ -146,13 +147,16 @@ export default function Catalog() {
                 </div>
 
                 <div className={css.checkboxContainer}>
-                  <label htmlFor={AutomaticId} className={css.customCheckbox}>
+                  <label
+                    htmlFor={TransmissionId}
+                    className={css.customCheckbox}
+                  >
                     Automatic
                   </label>
                   <Field
                     type="checkbox"
-                    name="automatic"
-                    id={AutomaticId}
+                    name="transmission"
+                    id={TransmissionId}
                     className={css.hiddenCheckbox}
                   />
                 </div>
@@ -255,6 +259,8 @@ export default function Catalog() {
               reviews,
               location,
               description,
+              kitchen,
+              AC,
             }) => (
               //   setCaravanId(id),
               <li key={id} className={css.catalogItem}>
@@ -288,8 +294,10 @@ export default function Catalog() {
                     <ul className={css.filterIconsContainer}>
                       <li className={css.filterIcons}>Automatic</li>
                       <li className={css.filterIcons}>Petrol</li>
-                      <li className={css.filterIcons}>Kitchen</li>
-                      <li className={css.filterIcons}>AC</li>
+                      {kitchen === true && (
+                        <li className={css.filterIcons}>Kitchen</li>
+                      )}
+                      {AC === true && <li className={css.filterIcons}>AC</li>}
                     </ul>
                   </div>
                   <button

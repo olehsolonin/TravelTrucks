@@ -261,6 +261,15 @@ export default function Catalog() {
               description,
               kitchen,
               AC,
+              TV,
+              bathroom,
+              form,
+              gas,
+              microwave,
+              radio,
+              refrigerator,
+              water,
+              transmission,
             }) => (
               //   setCaravanId(id),
               <li key={id} className={css.catalogItem}>
@@ -293,11 +302,35 @@ export default function Catalog() {
                   <div>
                     <ul className={css.filterIconsContainer}>
                       <li className={css.filterIcons}>Automatic</li>
-                      <li className={css.filterIcons}>Petrol</li>
+                      {gas === true && <li className={css.filterIcons}>Gas</li>}
                       {kitchen === true && (
                         <li className={css.filterIcons}>Kitchen</li>
                       )}
                       {AC === true && <li className={css.filterIcons}>AC</li>}
+                      {TV === true && <li className={css.filterIcons}>TV</li>}
+                      {water === true && (
+                        <li className={css.filterIcons}>Water</li>
+                      )}
+
+                      {refrigerator === true && (
+                        <li className={css.filterIcons}>Refrigerator</li>
+                      )}
+
+                      {radio === true && (
+                        <li className={css.filterIcons}>Radio</li>
+                      )}
+
+                      {microwave === true && (
+                        <li className={css.filterIcons}>Microwave</li>
+                      )}
+
+                      {bathroom === true && (
+                        <li className={css.filterIcons}>Bathroom</li>
+                      )}
+                      {form && <li className={css.filterIcons}>{form}</li>}
+                      {transmission && (
+                        <li className={css.filterIcons}>{transmission}</li>
+                      )}
                     </ul>
                   </div>
                   <button

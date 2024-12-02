@@ -7,7 +7,7 @@ export const initialState = {
 		items: [],
 	},
 	filters: {
-		status: 'all',
+		status: {},
 	},
 	details: {
 		items: null,
@@ -32,6 +32,14 @@ const rootReducer = (state = initialState, action) => {
 				details: {
 					...state.details,
 					items: action.payload,
+				},
+			};
+		case 'filters/addFilters':
+			return {
+				...state,
+				filters: {
+					...state.filters,
+					status: action.payload,
 				},
 			};
 		default:

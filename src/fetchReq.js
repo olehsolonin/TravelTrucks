@@ -14,3 +14,21 @@ export const getOneCarDetails = async (id) => {
 	return response;
 
 };
+
+export const getFilteredRequest = async (filters) => {
+	try {
+		console.log('Filters:', filters); // Проверка структуры
+		// const safeFilters = { ...filters };
+		const cleanFilters = Object.fromEntries(
+			Object.entries(filters).filter(([_, value]) => value != null && value !== '')
+		);
+		console.log(cleanFilters);
+
+
+		const response = await axios.get('/', { params: cleanFilters });
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching filtered data:', error);
+		throw error;
+	}
+};

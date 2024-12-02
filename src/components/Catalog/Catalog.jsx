@@ -4,6 +4,7 @@ import css from '../Catalog/Catalog.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
+import { getFilteredRequest } from '../../fetchReq.js';
 
 export default function Catalog() {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ export default function Catalog() {
   // підписка на стор (Для того щоб в компоненті отримати дані зі стору, у бібліотеці React Redux є хук useSelector(selector).)
 
   const currentFetchData = useSelector(state => state.data.items);
+  const filter = useSelector(state => state.filters.status);
 
   // Фабрика екшенів, створили відповідний екшен для зміни
 
@@ -26,7 +28,14 @@ export default function Catalog() {
     };
   };
 
-  // створюємо dispatchс для подальшої відправки екнешнів
+  const addFilters = activeFilters => {
+    return {
+      type: 'filters/addFilters',
+      payload: activeFilters,
+    };
+  };
+
+  // створюємо dispatc для подальшої відправки екнешнів
 
   const dispatch = useDispatch();
 
@@ -46,6 +55,17 @@ export default function Catalog() {
     getAllCatalog();
   }, [dispatch]);
 
+  const handleSubmit = async (values, actions) => {
+    console.log(values);
+    dispatch(addFilters(values));
+    //  const filtersString = JSON.stringify(values);
+    //  console.log(filtersString);
+    const res = await getFilteredRequest(values);
+    console.log(res.items);
+    actions.resetForm();
+    return res.items;
+  };
+
   const LocationId = useId();
   const ACId = useId();
   const AutomaticId = useId();
@@ -55,6 +75,15 @@ export default function Catalog() {
   const VanId = useId();
   const FullyIntegratedId = useId();
   const AlcoveId = useId();
+
+  const initialValues = {
+    location: '',
+    AC: '',
+    automatic: '',
+    kitchen: '',
+    TV: '',
+    bathroom: '',
+  };
 
   return (
     <div className={css.mainCatalogContainer}>
@@ -87,14 +116,14 @@ export default function Catalog() {
         <button type="submit" className={css.buttonSearch}>
           Search
         </button> */}
-        <Formik initialValues={{}} onSubmit={() => {}}>
+        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           <Form>
             <div className={css.locationBox}>
               <p className={css.locationTitle}>Location</p>
               <label htmlFor={LocationId}></label>
               <Field
                 type="text"
-                name="Location"
+                name="location"
                 id={LocationId}
                 className={css.locationInput}
               />
@@ -118,11 +147,11 @@ export default function Catalog() {
 
                 <div className={css.checkboxContainer}>
                   <label htmlFor={AutomaticId} className={css.customCheckbox}>
-                    Email
+                    Automatic
                   </label>
                   <Field
                     type="checkbox"
-                    name="Automatic"
+                    name="automatic"
                     id={AutomaticId}
                     className={css.hiddenCheckbox}
                   />
@@ -134,7 +163,7 @@ export default function Catalog() {
                   </label>
                   <Field
                     type="checkbox"
-                    name="Kitchen"
+                    name="kitchen"
                     id={KitchenId}
                     className={css.hiddenCheckbox}
                   />
@@ -158,7 +187,7 @@ export default function Catalog() {
                   </label>
                   <Field
                     type="checkbox"
-                    name="Bathroom"
+                    name="bathroom"
                     id={BathroomId}
                     className={css.hiddenCheckbox}
                   />

@@ -57,13 +57,22 @@ export default function Catalog() {
 
   const handleSubmit = async (values, actions) => {
     console.log(values);
-    dispatch(addFilters(values));
+
+    // тут, в modifiedValues додав перевірку на активацію і зміну значення поля values.transmission, щоб при активації була зміна знеачененя на automatic //
+    const modifiedValues = {
+      ...values,
+      transmission: values.transmission ? 'automatic' : '',
+    };
+    console.log(values);
+    dispatch(addFilters(modifiedValues));
+
     //  const filtersString = JSON.stringify(values);
     //  console.log(filtersString);
-    const res = await getFilteredRequest(values);
+    const res = await getFilteredRequest(modifiedValues);
     console.log(res.items);
     dispatch(getCatalog(res.items));
     actions.resetForm();
+    console.log(values);
     return res.items;
   };
 
@@ -84,6 +93,7 @@ export default function Catalog() {
     kitchen: '',
     TV: '',
     bathroom: '',
+    form: '',
   };
 
   return (
@@ -207,8 +217,9 @@ export default function Catalog() {
                     Van
                   </label>
                   <Field
-                    type="checkbox"
-                    name="Van"
+                    type="radio"
+                    name="form"
+                    value="panelTruck"
                     id={VanId}
                     className={css.hiddenCheckbox}
                   />
@@ -221,8 +232,9 @@ export default function Catalog() {
                     Fully Integrated
                   </label>
                   <Field
-                    type="checkbox"
-                    name="FullyIntegrated"
+                    type="radio"
+                    name="form"
+                    value="fullyIntegrated"
                     id={FullyIntegratedId}
                     className={css.hiddenCheckbox}
                   />
@@ -232,8 +244,9 @@ export default function Catalog() {
                     Alcove
                   </label>
                   <Field
-                    type="checkbox"
-                    name="Alcove"
+                    type="radio"
+                    name="form"
+                    value="alcove"
                     id={AlcoveId}
                     className={css.hiddenCheckbox}
                   />
@@ -270,6 +283,7 @@ export default function Catalog() {
               refrigerator,
               water,
               transmission,
+              engine,
             }) => (
               //   setCaravanId(id),
               <li key={id} className={css.catalogItem}>
@@ -301,35 +315,41 @@ export default function Catalog() {
                   </div>
                   <div>
                     <ul className={css.filterIconsContainer}>
-                      <li className={css.filterIcons}>Automatic</li>
-                      {gas === true && <li className={css.filterIcons}>Gas</li>}
-                      {kitchen === true && (
-                        <li className={css.filterIcons}>Kitchen</li>
-                      )}
-                      {AC === true && <li className={css.filterIcons}>AC</li>}
-                      {TV === true && <li className={css.filterIcons}>TV</li>}
-                      {water === true && (
-                        <li className={css.filterIcons}>Water</li>
-                      )}
+                      {/* <li className={css.filterIcons}>Automatic</li> */}
+                      {gas && <li className={css.filterIcons}>Gas</li>}
+                      {kitchen && <li className={css.filterIcons}>Kitchen</li>}
+                      {AC && <li className={css.filterIcons}>AC</li>}
+                      {TV && <li className={css.filterIcons}>TV</li>}
+                      {water && <li className={css.filterIcons}>Water</li>}
 
-                      {refrigerator === true && (
+                      {refrigerator && (
                         <li className={css.filterIcons}>Refrigerator</li>
                       )}
 
-                      {radio === true && (
-                        <li className={css.filterIcons}>Radio</li>
-                      )}
+                      {radio && <li className={css.filterIcons}>Radio</li>}
 
-                      {microwave === true && (
+                      {microwave && (
                         <li className={css.filterIcons}>Microwave</li>
                       )}
 
-                      {bathroom === true && (
+                      {bathroom && (
                         <li className={css.filterIcons}>Bathroom</li>
                       )}
-                      {form && <li className={css.filterIcons}>{form}</li>}
+                      {form && (
+                        <li className={css.filterIcons}>
+                          {form.charAt(0).toUpperCase() + form.slice(1)}
+                        </li>
+                      )}
                       {transmission && (
-                        <li className={css.filterIcons}>{transmission}</li>
+                        <li className={css.filterIcons}>
+                          {transmission.charAt(0).toUpperCase() +
+                            transmission.slice(1)}
+                        </li>
+                      )}
+                      {engine && (
+                        <li className={css.filterIcons}>
+                          {engine.charAt(0).toUpperCase() + engine.slice(1)}
+                        </li>
                       )}
                     </ul>
                   </div>

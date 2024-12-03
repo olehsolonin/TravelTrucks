@@ -7,25 +7,32 @@
 
 .catalogContainer {
   width: 888px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
 .catalogItem {
-  height: 368px;
+  height: 416px;
   padding: 24px;
   display: flex;
   gap: 24px;
+  border: 1px solid #dadde1;
+  border-radius: 20px;
 }
 
 .imgContainer {
   width: 292px;
-  height: 320px;
+  height: 368px;
   object-fit: cover;
+  border-radius: 20px;
 }
 
 .catalogPhoto {
   height: 100%;
   width: 100%;
   object-fit: cover;
+  border-radius: 20px;
 }
 
 .filtersColumn {
@@ -200,7 +207,7 @@ hr {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  height: 104px;
+  height: 152px;
   gap: 8px;
 }
 

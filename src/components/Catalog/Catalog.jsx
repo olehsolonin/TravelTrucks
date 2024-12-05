@@ -1,13 +1,16 @@
-import { useEffect, useId } from 'react';
+import { useEffect, useState, useId } from 'react';
 import { fetchCatalog } from '../../fetchReq.js';
 import css from '../Catalog/Catalog.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import { getFilteredRequest } from '../../fetchReq.js';
+import Loader from '../Loader/Loader.jsx';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Catalog() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   // роблю навігацію з загального каталогу, на сторінку конкретного авто
   const showMoreBtn = id => {
@@ -42,13 +45,19 @@ export default function Catalog() {
   useEffect(() => {
     async function getAllCatalog() {
       try {
+        //   setLoading(true);
         const res = await fetchCatalog();
         console.log(res.items);
         // використовуємо діспатч і відправляємо екшен в стор для обробки редюсером.
         dispatch(getCatalog(res.items));
+        //   setLoading(false);
+        //   toast.success('The request is successful, the data are loading)');
         return res.items;
       } catch (error) {
         console.log(error);
+        toast.error('Ooops, some error, refresh the page...');
+      } finally {
+        //   setLoading(false);
       }
     }
 
@@ -56,24 +65,36 @@ export default function Catalog() {
   }, [dispatch]);
 
   const handleSubmit = async (values, actions) => {
-    console.log(values);
+    try {
+      console.log(values);
 
-    // тут, в modifiedValues додав перевірку на активацію і зміну значення поля values.transmission, щоб при активації була зміна знеачененя на automatic //
-    const modifiedValues = {
-      ...values,
-      transmission: values.transmission ? 'automatic' : '',
-    };
-    console.log(values);
-    dispatch(addFilters(modifiedValues));
+      // тут, в modifiedValues додав перевірку на активацію і зміну значення поля values.transmission, щоб при активації була зміна знеачененя на automatic //
+      const modifiedValues = {
+        ...values,
+        transmission: values.transmission ? 'automatic' : '',
+      };
+      console.log(values);
+      dispatch(addFilters(modifiedValues));
 
-    //  const filtersString = JSON.stringify(values);
-    //  console.log(filtersString);
-    const res = await getFilteredRequest(modifiedValues);
-    console.log(res.items);
-    dispatch(getCatalog(res.items));
-    actions.resetForm();
-    console.log(values);
-    return res.items;
+      //  const filtersString = JSON.stringify(values);
+      //  console.log(filtersString);
+      setLoading(true);
+
+      const res = await getFilteredRequest(modifiedValues);
+      console.log(res.items);
+      dispatch(getCatalog(res.items));
+      actions.resetForm();
+      console.log(values);
+      setLoading(false);
+
+      return res.items;
+    } catch (error) {
+      console.log(error);
+      actions.resetForm();
+    } finally {
+      setLoading(false);
+      actions.resetForm();
+    }
   };
 
   const LocationId = useId();
@@ -98,6 +119,7 @@ export default function Catalog() {
 
   return (
     <div className={css.mainCatalogContainer}>
+      {loading && <Loader />}
       <div className={css.filtersColumn}>
         {/* <div className={css.locationBox}>
           <p className={css.locationTitle}>Location</p>
@@ -366,6 +388,7 @@ export default function Catalog() {
           )}
         </ul>
       )}
+      <Toaster />
     </div>
   );
 }

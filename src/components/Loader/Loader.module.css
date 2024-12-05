@@ -1,0 +1,10 @@
+.loaderContainer {
+  position: fixed;
+  top: 5%; /* Сверху 5% от экрана */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000; /* Поверх всех элементов */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

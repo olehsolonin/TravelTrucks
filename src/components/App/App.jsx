@@ -11,7 +11,7 @@ import logo from '../../img/Logo.svg';
 import Features from '../Features/Features.jsx';
 import Reviews from '../Reviews/Reviews.jsx';
 // import Products from 'path/to/pages/Products';
-// import NotFound from 'path/to/pages/NotFound';
+import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage.jsx';
 
 const buildLinkClass = ({ isActive }) => {
   return clsx(css.link, isActive && css.active);
@@ -45,6 +45,7 @@ export default function App() {
           <Route path="Features" element={<Features />} />
           <Route path="Reviews" element={<Reviews />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
   );

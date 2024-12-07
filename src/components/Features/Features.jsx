@@ -1,10 +1,10 @@
 import css from './Features.module.css';
+import CharacteristicsIcons from '../CharacteristicsIcons/CharacteristicsIcons.jsx';
 
-export default function Features() {
+export default function Features({ params }) {
   return (
-    <div className={css.featuresBottomConrtainer}>
-      <div className={css.leftBottomConrtainer}></div>
-      <div className={css.rightBottomConrtainer}></div>
+    <div>
+      <CharacteristicsIcons details={params} />
     </div>
   );
 }

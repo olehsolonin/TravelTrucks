@@ -1,3 +1,3 @@
 export default function Reviews() {
-  return <p>Rozpakouka nahui</p>;
+  return <p>prava9 chastb</p>;
 }

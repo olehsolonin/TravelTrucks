@@ -1,14 +1,24 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { Routes, Route, NavLink, Outlet, Link } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  NavLink,
+  Outlet,
+  Link,
+  useLocation,
+} from 'react-router-dom';
 // import React from 'react';
 import { getOneCarDetails } from '../../fetchReq.js';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import css from './TravelTruckDetails.module.css';
+import Features from '../Features/Features.jsx';
+import Reviews from '../Reviews/Reviews.jsx';
 
 export default function TravelTruckDetails() {
   const { id } = useParams();
   console.log(id);
+  const location = useLocation();
 
   //підписка і отримання даних зі стору з станом.
   const allDetails = useSelector(state => state.details.items);
@@ -42,53 +52,54 @@ export default function TravelTruckDetails() {
     return <p>Loading details...</p>;
   }
 
-  const {
-    name,
-    price,
-    rating,
-    location,
-    description,
-    form,
-    length,
-    width,
-    height,
-    tank,
-    consumption,
-    transmission,
-    engine,
-    AC,
-    bathroom,
-    kitchen,
-    TV,
-    radio,
-    refrigerator,
-    microwave,
-    gas,
-    water,
-    gallery = [],
-    reviews = [],
-  } = allDetails;
+  //   const {
+  //     name,
+  //     price,
+  //     rating,
+  //     location,
+  //     description,
+  //     form,
+  //     length,
+  //     width,
+  //     height,
+  //     tank,
+  //     consumption,
+  //     transmission,
+  //     engine,
+  //     AC,
+  //     bathroom,
+  //     kitchen,
+  //     TV,
+  //     radio,
+  //     refrigerator,
+  //     microwave,
+  //     gas,
+  //     water,
+  //     gallery = [],
+  //     reviews = [],
+  //   } = allDetails;
   return (
     <div className={css.mainDetailContainer}>
       <div className={css.detailsContainer}>
         <div className={css.namePrice}>
           <div className={css.priceName}>
-            <p className={css.nameTitle}>{name}</p>
+            <p className={css.nameTitle}>{allDetails.name}</p>
           </div>
           <div className={css.ratingLocation}>
             <div className={css.ratingPart}>
               <p>
-                {rating} <span>({reviews?.length || 0} Reviews)</span>
+                {allDetails.rating}{' '}
+                <span>({allDetails.reviews?.length || 0} Reviews)</span>
               </p>
-              <p>{location}</p>
+              <p>{allDetails.location}</p>
             </div>
-            <p>{price}</p>
+            <p>{allDetails.price}</p>
           </div>
         </div>
       </div>
       <div className={css.photoDetails}>
-        {gallery.length > 0 ? (
-          gallery.map((photo, index) => (
+        {allDetails.gallery.length > 0 ? (
+          allDetails.gallery.map((photo, index) => (
             <img
               key={index}
               src={photo.thumb || ''}
@@ -101,14 +112,27 @@ export default function TravelTruckDetails() {
         )}
       </div>
       <div className={css.descriptionDetails}>
-        <p>{description}</p>
+        <p>{allDetails.description}</p>
       </div>
       <div className={css.moreInfoDetails}>
-        <Link to="Features">Features</Link>
-        <Link to="Reviews">Reviews</Link>
+        <nav>
+          <NavLink to="features">Features</NavLink>
+          <NavLink to="reviews">Reviews</NavLink>
+        </nav>
       </div>
       <hr className={css.line} />
-      <Outlet />
+      <div className={css.orderFormConrtainer}>
+        <div className={css.leftConrtainer}>
+          {location.pathname.endsWith('/features') && (
+            <Features params={allDetails} />
+          )}
+          {location.pathname.endsWith('/reviews') && (
+            <Reviews params={allDetails} />
+          )}
+        </div>
+        <div className={css.rightConrtainer}></div>
+      </div>
+      {/* <Outlet /> */}
     </div>
   );
 }

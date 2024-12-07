@@ -7,6 +7,7 @@ import { Formik, Form, Field } from 'formik';
 import { getFilteredRequest } from '../../fetchReq.js';
 import Loader from '../Loader/Loader.jsx';
 import toast, { Toaster } from 'react-hot-toast';
+import CharacteristicsIcons from '../CharacteristicsIcons/CharacteristicsIcons.jsx';
 
 export default function Catalog() {
   const navigate = useNavigate();
@@ -284,108 +285,49 @@ export default function Catalog() {
 
       {currentFetchData.length > 0 && (
         <ul className={css.catalogContainer}>
-          {currentFetchData.map(
-            ({
-              id,
-              gallery,
-              name,
-              price,
-              rating,
-              reviews,
-              location,
-              description,
-              kitchen,
-              AC,
-              TV,
-              bathroom,
-              form,
-              gas,
-              microwave,
-              radio,
-              refrigerator,
-              water,
-              transmission,
-              engine,
-            }) => (
-              //   setCaravanId(id),
-              <li key={id} className={css.catalogItem}>
-                <div className={css.imgContainer}>
-                  <img
-                    src={gallery[0].thumb}
-                    alt="photo"
-                    className={css.catalogPhoto}
-                    width="292"
-                    height="320"
-                  />
+          {currentFetchData.map(param => (
+            //   setCaravanId(id),
+            <li key={param.id} className={css.catalogItem}>
+              <div className={css.imgContainer}>
+                <img
+                  src={param.gallery[0].thumb}
+                  alt="photo"
+                  className={css.catalogPhoto}
+                  width="292"
+                  height="320"
+                />
+              </div>
+              <div className={css.detailsContainer}>
+                <div className={css.namePrice}>
+                  <div className={css.priceName}>
+                    <p className={css.nameTitle}>{param.name}</p>
+                    <p>{param.price}</p>
+                  </div>
+                  <div className={css.ratingLocation}>
+                    <p>
+                      {param.rating}{' '}
+                      <span>({param.reviews.length}Reviews)</span>
+                    </p>
+                    <p>{param.location}</p>
+                  </div>
                 </div>
-                <div className={css.detailsContainer}>
-                  <div className={css.namePrice}>
-                    <div className={css.priceName}>
-                      <p className={css.nameTitle}>{name}</p>
-                      <p>{price}</p>
-                    </div>
-                    <div className={css.ratingLocation}>
-                      <p>
-                        {rating} <span>({reviews.length}Reviews)</span>
-                      </p>
-                      <p>{location}</p>
-                    </div>
-                  </div>
 
-                  <div>
-                    <p className={css.descriptionText}>{description}</p>
-                  </div>
-                  <div>
-                    <ul className={css.filterIconsContainer}>
-                      {/* <li className={css.filterIcons}>Automatic</li> */}
-                      {gas && <li className={css.filterIcons}>Gas</li>}
-                      {kitchen && <li className={css.filterIcons}>Kitchen</li>}
-                      {AC && <li className={css.filterIcons}>AC</li>}
-                      {TV && <li className={css.filterIcons}>TV</li>}
-                      {water && <li className={css.filterIcons}>Water</li>}
-
-                      {refrigerator && (
-                        <li className={css.filterIcons}>Refrigerator</li>
-                      )}
-
-                      {radio && <li className={css.filterIcons}>Radio</li>}
-
-                      {microwave && (
-                        <li className={css.filterIcons}>Microwave</li>
-                      )}
-
-                      {bathroom && (
-                        <li className={css.filterIcons}>Bathroom</li>
-                      )}
-                      {form && (
-                        <li className={css.filterIcons}>
-                          {form.charAt(0).toUpperCase() + form.slice(1)}
-                        </li>
-                      )}
-                      {transmission && (
-                        <li className={css.filterIcons}>
-                          {transmission.charAt(0).toUpperCase() +
-                            transmission.slice(1)}
-                        </li>
-                      )}
-                      {engine && (
-                        <li className={css.filterIcons}>
-                          {engine.charAt(0).toUpperCase() + engine.slice(1)}
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-                  <button
-                    type="submit"
-                    className={css.buttonSearchCatalog}
-                    onClick={() => showMoreBtn(id)}
-                  >
-                    Show more
-                  </button>
+                <div>
+                  <p className={css.descriptionText}>{param.description}</p>
                 </div>
-              </li>
-            )
-          )}
+                <div>
+                  <CharacteristicsIcons details={param} />
+                </div>
+                <button
+                  type="submit"
+                  className={css.buttonSearchCatalog}
+                  onClick={() => showMoreBtn(param.id)}
+                >
+                  Show more
+                </button>
+              </div>
+            </li>
+          ))}
         </ul>
       )}
       <Toaster />

@@ -87,6 +87,9 @@
   padding: 44px 57px;
   width: 641px;
   height: 588px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .leftConrtainer {
@@ -95,4 +98,113 @@
   width: 631px;
   height: 588px;
   background: #f7f7f7;
+}
+
+.vehicleTitle {
+  margin-top: 52px;
+  margin-bottom: 24px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+  color: #101828;
+}
+
+.itemBlock {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.itemsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.itemDetails {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: #101828;
+}
+
+.linksContainer {
+  display: flex;
+  gap: 40px;
+}
+
+.linksToDetails {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+  color: #101828;
+}
+
+.dataField {
+  border-radius: 12px;
+  padding: 18px 337px 18px 18px;
+  width: 527px;
+  height: 60px;
+  background: #f7f7f7;
+}
+
+.formTitleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formTitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+  color: #101828;
+}
+
+.helpMessage {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #6c717b;
+}
+
+.fieldsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.sendButton {
+  border-radius: 200px;
+  padding: 16px 60px;
+  width: 166px;
+  height: 56px;
+  background: #e44848;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.mod {
+  width: 527px;
+  height: 118px;
+  /* background: #f7f7f7;
+  border-radius: 12px;
+  padding: 18px 337px 18px 18px; */
 }

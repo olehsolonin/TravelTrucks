@@ -1,24 +1,36 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import {
-  Routes,
-  Route,
-  NavLink,
-  Outlet,
-  Link,
-  useLocation,
-} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 // import React from 'react';
 import { getOneCarDetails } from '../../fetchReq.js';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import css from './TravelTruckDetails.module.css';
-import Features from '../Features/Features.jsx';
-import Reviews from '../Reviews/Reviews.jsx';
+import { Formik, Form, Field } from 'formik';
+import toast, { Toaster } from 'react-hot-toast';
+import { FeedbackSchema } from '../../FeedbackSchema.js';
 
 export default function TravelTruckDetails() {
   const { id } = useParams();
   console.log(id);
-  const location = useLocation();
+  //   const location = useLocation();
+
+  const initialValues = {
+    username: '',
+    email: '',
+    date: '',
+    usertext: '',
+  };
+
+  const handleSubmit = async (values, actions) => {
+    console.log(values);
+    const { username, date } = values;
+    //  toast.success(`${JSON.stringify(values)}`);
+    toast.success(
+      `Dear ${username}, the reservation for ${date} successfully completed`
+    );
+
+    actions.resetForm();
+  };
 
   //підписка і отримання даних зі стору з станом.
   const allDetails = useSelector(state => state.details.items);
@@ -52,32 +64,6 @@ export default function TravelTruckDetails() {
     return <p>Loading details...</p>;
   }
 
-  //   const {
-  //     name,
-  //     price,
-  //     rating,
-  //     location,
-  //     description,
-  //     form,
-  //     length,
-  //     width,
-  //     height,
-  //     tank,
-  //     consumption,
-  //     transmission,
-  //     engine,
-  //     AC,
-  //     bathroom,
-  //     kitchen,
-  //     TV,
-  //     radio,
-  //     refrigerator,
-  //     microwave,
-  //     gas,
-  //     water,
-  //     gallery = [],
-  //     reviews = [],
-  //   } = allDetails;
   return (
     <div className={css.mainDetailContainer}>
       <div className={css.detailsContainer}>
@@ -115,24 +101,73 @@ export default function TravelTruckDetails() {
         <p>{allDetails.description}</p>
       </div>
       <div className={css.moreInfoDetails}>
-        <nav>
-          <NavLink to="features">Features</NavLink>
-          <NavLink to="reviews">Reviews</NavLink>
+        <nav className={css.linksContainer}>
+          <NavLink to="features" className={css.linksToDetails}>
+            Features
+          </NavLink>
+          <NavLink to="reviews" className={css.linksToDetails}>
+            Reviews
+          </NavLink>
         </nav>
       </div>
       <hr className={css.line} />
       <div className={css.orderFormConrtainer}>
         <div className={css.leftConrtainer}>
-          {location.pathname.endsWith('/features') && (
-            <Features params={allDetails} />
-          )}
-          {location.pathname.endsWith('/reviews') && (
-            <Reviews params={allDetails} />
-          )}
+          <Outlet />
         </div>
-        <div className={css.rightConrtainer}></div>
+        <div className={css.rightConrtainer}>
+          <div className={css.formTitleBlock}>
+            <h2 className={css.formTitle}>Book your campervan now</h2>
+            <p className={css.helpMessage}>
+              Stay connected! We are always ready to help you.
+            </p>
+          </div>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={FeedbackSchema}
+          >
+            <Form>
+              <div className={css.fieldsContainer}>
+                <Field
+                  type="text"
+                  name="username"
+                  placeholder="Name*"
+                  className={css.dataField}
+                />
+
+                <Field
+                  type="email"
+                  name="email"
+                  placeholder="Email*"
+                  className={css.dataField}
+                />
+                <Field
+                  type="date"
+                  name="date"
+                  placeholder="Booking date*"
+                  className={css.dataField}
+                />
+                <Field
+                  as="textarea"
+                  name="usertext"
+                  cols="20"
+                  rows="5"
+                  placeholder="Comment"
+                  className={`${css.dataField} ${css.mod}`}
+                />
+              </div>
+
+              <div className={css.buttonContainer}>
+                <button type="submit" className={css.sendButton}>
+                  Send
+                </button>
+              </div>
+            </Form>
+          </Formik>
+          <Toaster />
+        </div>
       </div>
-      {/* <Outlet /> */}
     </div>
   );
 }

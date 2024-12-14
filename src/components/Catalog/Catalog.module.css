@@ -129,6 +129,10 @@ hr {
   color: #fff;
 }
 
+.buttonSearch:hover {
+  background-color: #d84343;
+}
+
 .buttonSearchCatalog {
   border-radius: 200px;
   padding: 16px 40px;
@@ -252,13 +256,17 @@ hr {
 }
 
 .hiddenCheckbox:checked + .customCheckbox {
-  border-color: orange;
-  background-color: #fff8e1;
+  border-color: #d84343;
+  /* background-color: #fff8e1; */
 }
 
-.customCheckbox:hover {
-  border-color: #999;
-}
+/* .customCheckbox:hover {
+  border-color: #d84343;
+} */
+
+/* .customCheckbox.active {
+  border-color: #d84343;
+} */
 
 .filterBlocksContainerType {
   height: 96px;

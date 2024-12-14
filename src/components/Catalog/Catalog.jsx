@@ -159,6 +159,7 @@ export default function Catalog() {
                 type="text"
                 name="location"
                 id={LocationId}
+                placeholder="City"
                 className={css.locationInput}
               />
             </div>
@@ -168,66 +169,67 @@ export default function Catalog() {
               <hr />
               <div className={css.filterBlocksContainer}>
                 <div className={css.checkboxContainer}>
-                  <label htmlFor={ACId} className={css.customCheckbox}>
-                    AC
-                  </label>
                   <Field
                     type="checkbox"
                     name="AC"
                     id={ACId}
                     className={css.hiddenCheckbox}
                   />
+
+                  <label htmlFor={ACId} className={css.customCheckbox}>
+                    AC
+                  </label>
                 </div>
 
                 <div className={css.checkboxContainer}>
-                  <label
-                    htmlFor={TransmissionId}
-                    className={css.customCheckbox}
-                  >
-                    Automatic
-                  </label>
                   <Field
                     type="checkbox"
                     name="transmission"
                     id={TransmissionId}
                     className={css.hiddenCheckbox}
                   />
+                  <label
+                    htmlFor={TransmissionId}
+                    className={css.customCheckbox}
+                  >
+                    Automatic
+                  </label>
                 </div>
 
                 <div className={css.checkboxContainer}>
-                  <label htmlFor={KitchenId} className={css.customCheckbox}>
-                    Kitchen
-                  </label>
                   <Field
                     type="checkbox"
                     name="kitchen"
                     id={KitchenId}
                     className={css.hiddenCheckbox}
                   />
+                  <label htmlFor={KitchenId} className={css.customCheckbox}>
+                    Kitchen
+                  </label>
                 </div>
 
                 <div className={css.checkboxContainer}>
-                  <label htmlFor={TVId} className={css.customCheckbox}>
-                    TV
-                  </label>
                   <Field
                     type="checkbox"
                     name="TV"
                     id={TVId}
                     className={css.hiddenCheckbox}
                   />
+                  <label htmlFor={TVId} className={css.customCheckbox}>
+                    TV
+                  </label>
                 </div>
 
                 <div className={css.checkboxContainer}>
-                  <label htmlFor={BathroomId} className={css.customCheckbox}>
-                    Bathroom
-                  </label>
                   <Field
                     type="checkbox"
                     name="bathroom"
                     id={BathroomId}
                     className={css.hiddenCheckbox}
                   />
+                  <label htmlFor={BathroomId} className={css.customCheckbox}>
+                    Bathroom
+                  </label>
                 </div>
               </div>
             </div>
@@ -236,9 +238,6 @@ export default function Catalog() {
               <hr />
               <div className={css.filterBlocksContainerType}>
                 <div className={css.checkboxContainer}>
-                  <label htmlFor={VanId} className={css.customCheckbox}>
-                    Van
-                  </label>
                   <Field
                     type="radio"
                     name="form"
@@ -246,14 +245,11 @@ export default function Catalog() {
                     id={VanId}
                     className={css.hiddenCheckbox}
                   />
+                  <label htmlFor={VanId} className={css.customCheckbox}>
+                    Van
+                  </label>
                 </div>
                 <div className={css.checkboxContainer}>
-                  <label
-                    htmlFor={FullyIntegratedId}
-                    className={css.customCheckbox}
-                  >
-                    Fully Integrated
-                  </label>
                   <Field
                     type="radio"
                     name="form"
@@ -261,11 +257,14 @@ export default function Catalog() {
                     id={FullyIntegratedId}
                     className={css.hiddenCheckbox}
                   />
+                  <label
+                    htmlFor={FullyIntegratedId}
+                    className={css.customCheckbox}
+                  >
+                    Fully Integrated
+                  </label>
                 </div>
                 <div className={css.checkboxContainer}>
-                  <label htmlFor={AlcoveId} className={css.customCheckbox}>
-                    Alcove
-                  </label>
                   <Field
                     type="radio"
                     name="form"
@@ -273,6 +272,9 @@ export default function Catalog() {
                     id={AlcoveId}
                     className={css.hiddenCheckbox}
                   />
+                  <label htmlFor={AlcoveId} className={css.customCheckbox}>
+                    Alcove
+                  </label>
                 </div>
               </div>
             </div>

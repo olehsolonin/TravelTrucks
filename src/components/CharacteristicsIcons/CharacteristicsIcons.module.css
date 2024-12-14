@@ -223,6 +223,9 @@ hr {
   line-height: 150%;
   text-align: center;
   color: #101828;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
 }
 
 .checkboxContainer {
@@ -265,4 +268,9 @@ hr {
   display: flex;
   flex-direction: row;
   gap: 12px;
+}
+
+.svgIconStyle {
+  width: 20px;
+  height: 20px;
 }

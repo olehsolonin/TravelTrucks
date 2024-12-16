@@ -98,19 +98,29 @@ export default function CharacteristicsIcons({ details }) {
           Bathroom
         </li>
       )}
-      {details.form && (
+      {/* {details.form && (
         <li className={css.filterIcons}>
           {details.form.charAt(0).toUpperCase() + details.form.slice(1)}
         </li>
-      )}
+      )} */}
       {details.transmission && (
         <li className={css.filterIcons}>
+          <span>
+            <svg className={css.svgIconStyle} width="20" height="20">
+              <use xlinkHref="/img/symbol-defs.svg#icon-Automatic"></use>
+            </svg>
+          </span>
           {details.transmission.charAt(0).toUpperCase() +
             details.transmission.slice(1)}
         </li>
       )}
       {details.engine && (
         <li className={css.filterIcons}>
+          <span>
+            <svg className={css.svgIconStyle} width="20" height="20">
+              <use xlinkHref="/img/symbol-defs.svg#icon-Petrol"></use>
+            </svg>
+          </span>
           {details.engine.charAt(0).toUpperCase() + details.engine.slice(1)}
         </li>
       )}

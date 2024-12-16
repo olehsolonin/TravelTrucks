@@ -208,7 +208,7 @@ hr {
   flex-direction: row;
   flex-wrap: wrap;
   height: 152px;
-  gap: 8px;
+  gap: 8px 6px;
 }
 
 .filterIcons {

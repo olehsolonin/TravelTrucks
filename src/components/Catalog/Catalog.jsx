@@ -8,6 +8,8 @@ import { getFilteredRequest } from '../../fetchReq.js';
 import Loader from '../Loader/Loader.jsx';
 import toast, { Toaster } from 'react-hot-toast';
 import CharacteristicsIcons from '../CharacteristicsIcons/CharacteristicsIcons.jsx';
+import { BsSuitHeart } from 'react-icons/bs';
+import { BsWind } from 'react-icons/bs';
 
 export default function Catalog() {
   const navigate = useNavigate();
@@ -177,6 +179,7 @@ export default function Catalog() {
                   />
 
                   <label htmlFor={ACId} className={css.customCheckbox}>
+                    <BsWind className={css.customSvgIcon} />
                     AC
                   </label>
                 </div>
@@ -192,6 +195,9 @@ export default function Catalog() {
                     htmlFor={TransmissionId}
                     className={css.customCheckbox}
                   >
+                    <svg className={css.customSvgIcon}>
+                      <use xlinkHref="/img/symbol-defs.svg#icon-Automatic"></use>
+                    </svg>
                     Automatic
                   </label>
                 </div>
@@ -204,6 +210,9 @@ export default function Catalog() {
                     className={css.hiddenCheckbox}
                   />
                   <label htmlFor={KitchenId} className={css.customCheckbox}>
+                    <svg className={css.customSvgIcon}>
+                      <use xlinkHref="/img/symbol-defs.svg#icon-Kitchen"></use>
+                    </svg>
                     Kitchen
                   </label>
                 </div>
@@ -216,6 +225,9 @@ export default function Catalog() {
                     className={css.hiddenCheckbox}
                   />
                   <label htmlFor={TVId} className={css.customCheckbox}>
+                    <svg className={css.customSvgIcon}>
+                      <use xlinkHref="/img/symbol-defs.svg#icon-TV"></use>
+                    </svg>
                     TV
                   </label>
                 </div>
@@ -228,6 +240,9 @@ export default function Catalog() {
                     className={css.hiddenCheckbox}
                   />
                   <label htmlFor={BathroomId} className={css.customCheckbox}>
+                    <svg className={css.customSvgIcon}>
+                      <use xlinkHref="/img/symbol-defs.svg#icon-Bathroom"></use>
+                    </svg>
                     Bathroom
                   </label>
                 </div>
@@ -303,7 +318,12 @@ export default function Catalog() {
                 <div className={css.namePrice}>
                   <div className={css.priceName}>
                     <p className={css.nameTitle}>{param.name}</p>
-                    <p>{param.price}</p>
+                    <p className={css.priceBlock}>
+                      €{param.price}.00{' '}
+                      <span>
+                        <BsSuitHeart />
+                      </span>
+                    </p>
                   </div>
                   <div className={css.ratingLocation}>
                     <p>

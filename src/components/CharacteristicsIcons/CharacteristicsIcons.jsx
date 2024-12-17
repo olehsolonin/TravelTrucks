@@ -1,4 +1,7 @@
 import css from './CharacteristicsIcons.module.css';
+import { MdOutlineGasMeter } from 'react-icons/md';
+import { IoWaterOutline } from 'react-icons/io5';
+import { LuMicrowave } from 'react-icons/lu';
 
 export default function CharacteristicsIcons({ details }) {
   return (
@@ -7,9 +10,10 @@ export default function CharacteristicsIcons({ details }) {
       {details.gas && (
         <li className={css.filterIcons}>
           <span>
-            <svg className={css.svgIconStyle} width="20" height="20">
+            {/* <svg className={css.svgIconStyle} width="20" height="20">
               <use xlinkHref="/img/symbol-defs.svg#icon-Gas"></use>
-            </svg>
+            </svg> */}
+            <MdOutlineGasMeter className={css.svgIconStyle} />
           </span>
           Gas
         </li>
@@ -47,9 +51,10 @@ export default function CharacteristicsIcons({ details }) {
       {details.water && (
         <li className={css.filterIcons}>
           <span>
-            <svg className={css.svgIconStyle} width="20" height="20">
+            {/* <svg className={css.svgIconStyle} width="20" height="20">
               <use xlinkHref="/img/symbol-defs.svg#icon-Water"></use>
-            </svg>
+            </svg> */}
+            <IoWaterOutline className={css.svgIconStyle} />
           </span>
           Water
         </li>
@@ -80,9 +85,10 @@ export default function CharacteristicsIcons({ details }) {
       {details.microwave && (
         <li className={css.filterIcons}>
           <span>
-            <svg className={css.svgIconStyle} width="20" height="20">
+            {/* <svg className={css.svgIconStyle} width="20" height="20">
               <use xlinkHref="/img/symbol-defs.svg#icon-Microwave"></use>
-            </svg>
+            </svg> */}
+            <LuMicrowave className={css.svgIconStyle} />
           </span>
           Microwave
         </li>

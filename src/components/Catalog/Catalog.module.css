@@ -178,7 +178,7 @@ hr {
   flex-direction: row;
   font-family: 'Inter', sans-serif;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 133%;
   color: #101828;
 }
@@ -243,6 +243,8 @@ hr {
 
 .customCheckbox {
   display: flex;
+  flex-direction: column;
+  gap: 8px;
   align-items: center;
   justify-content: center;
   width: 112px; /* Ширина чекбокса */
@@ -250,9 +252,16 @@ hr {
   border: 2px solid #ccc;
   border-radius: 8px;
   cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
   font-size: 16px;
   text-align: center;
   transition: border-color 0.3s ease;
+}
+
+.customSvgIcon {
+  width: 32px;
+  height: 32px;
 }
 
 .hiddenCheckbox:checked + .customCheckbox {
@@ -273,4 +282,11 @@ hr {
   display: flex;
   flex-direction: row;
   gap: 12px;
+}
+
+.priceBlock {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
 }

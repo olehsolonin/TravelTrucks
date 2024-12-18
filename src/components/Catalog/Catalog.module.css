@@ -290,3 +290,15 @@ hr {
   gap: 12px;
   align-items: center;
 }
+
+.ratingStar {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+
+.ratingContainer {
+  display: flex;
+  /* gap: 4px; */
+  align-items: center;
+}

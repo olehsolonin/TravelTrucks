@@ -261,6 +261,9 @@ export default function Catalog() {
                     className={css.hiddenCheckbox}
                   />
                   <label htmlFor={VanId} className={css.customCheckbox}>
+                    <svg className={css.customSvgIcon}>
+                      <use xlinkHref="/img/symbol-defs.svg#icon-Van"></use>
+                    </svg>
                     Van
                   </label>
                 </div>
@@ -276,6 +279,9 @@ export default function Catalog() {
                     htmlFor={FullyIntegratedId}
                     className={css.customCheckbox}
                   >
+                    <svg className={css.customSvgIcon}>
+                      <use xlinkHref="/img/symbol-defs.svg#icon-Fully"></use>
+                    </svg>
                     Fully Integrated
                   </label>
                 </div>
@@ -288,6 +294,9 @@ export default function Catalog() {
                     className={css.hiddenCheckbox}
                   />
                   <label htmlFor={AlcoveId} className={css.customCheckbox}>
+                    <svg className={css.customSvgIcon}>
+                      <use xlinkHref="/img/symbol-defs.svg#icon-Alcove"></use>
+                    </svg>
                     Alcove
                   </label>
                 </div>
@@ -326,7 +335,12 @@ export default function Catalog() {
                     </p>
                   </div>
                   <div className={css.ratingLocation}>
-                    <p>
+                    <p className={css.ratingContainer}>
+                      <span>
+                        <svg className={css.ratingStar}>
+                          <use xlinkHref="/img/symbol-defs.svg#icon-Rating-active"></use>
+                        </svg>
+                      </span>
                       {param.rating}{' '}
                       <span>({param.reviews.length}Reviews)</span>
                     </p>

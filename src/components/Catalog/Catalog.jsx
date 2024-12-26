@@ -24,6 +24,9 @@ export default function Catalog() {
 
   const currentFetchData = useSelector(state => state.data.items);
   const filter = useSelector(state => state.filters.status);
+  const currentPageParams = useSelector(state => state.filters.status.page);
+  const currentLimitParams = useSelector(state => state.filters.status.limit);
+  const currentTogglerState = useSelector(state => state.data.totalItems);
 
   // Фабрика екшенів, створили відповідний екшен для зміни
 
@@ -41,6 +44,23 @@ export default function Catalog() {
     };
   };
 
+  const newPagePart = pageParams => {
+    const newPageData = Number(pageParams) + 1;
+
+    //  console.log(newPageData);
+    return {
+      type: 'filters/addMorePage',
+      payload: newPageData,
+    };
+  };
+
+  const changeToggler = currentToggler => {
+    return {
+      type: 'data/toggler',
+      payload: currentToggler,
+    };
+  };
+
   // створюємо dispatc для подальшої відправки екнешнів
 
   const dispatch = useDispatch();
@@ -49,13 +69,28 @@ export default function Catalog() {
     async function getAllCatalog() {
       try {
         //   setLoading(true);
-        const res = await fetchCatalog();
+        const res = await getFilteredRequest(
+          filter,
+          currentLimitParams,
+          currentPageParams,
+          currentTogglerState
+        );
         console.log(res.items);
+        console.log(res.total);
+        const totalItems = res.total;
+        const totalPages = Math.ceil(totalItems / currentLimitParams);
+        console.log(totalPages);
+        console.log(currentTogglerState);
+        if (currentPageParams >= totalPages) {
+          //  toast.error("We're sorry, there are no more posts to load");
+          dispatch(changeToggler(currentTogglerState));
+        }
         // використовуємо діспатч і відправляємо екшен в стор для обробки редюсером.
-        dispatch(getCatalog(res.items));
+        //   dispatch(getCatalog(res.items));
         //   setLoading(false);
         //   toast.success('The request is successful, the data are loading)');
-        return res.items;
+
+        return dispatch(getCatalog(res.items));
       } catch (error) {
         console.log(error);
         toast.error('Ooops, some error, refresh the page...');
@@ -65,7 +100,13 @@ export default function Catalog() {
     }
 
     getAllCatalog();
-  }, [dispatch]);
+  }, [
+    dispatch,
+    filter,
+    currentLimitParams,
+    currentPageParams,
+    currentTogglerState,
+  ]);
 
   const handleSubmit = async (values, actions) => {
     try {
@@ -83,8 +124,14 @@ export default function Catalog() {
       //  console.log(filtersString);
       setLoading(true);
 
-      const res = await getFilteredRequest(modifiedValues);
+      const res = await getFilteredRequest(
+        modifiedValues,
+        currentLimitParams,
+        currentPageParams,
+        currentTogglerState
+      );
       console.log(res.items);
+      console.log(res.total);
       dispatch(getCatalog(res.items));
       actions.resetForm();
       console.log(values);
@@ -110,14 +157,39 @@ export default function Catalog() {
   const FullyIntegratedId = useId();
   const AlcoveId = useId();
 
-  const initialValues = {
-    location: '',
-    AC: '',
-    transmission: '',
-    kitchen: '',
-    TV: '',
-    bathroom: '',
-    form: '',
+  //   const initialValues = {
+  //     location: '',
+  //     AC: '',
+  //     transmission: '',
+  //     kitchen: '',
+  //     TV: '',
+  //     bathroom: '',
+  //     form: '',
+  //     limit: 5,
+  //     page: 1,
+  //   };
+
+  const handleLoadMore = () => {
+    try {
+      console.log('salam brat');
+      dispatch(newPagePart(currentPageParams));
+      console.log(filter);
+      // const res = await getFilteredRequest(filter);
+      // console.log(res.items);
+      // console.log(res.total);
+      // const totalItems = res.total;
+      // const totalPages = Math.ceil(totalItems / currentLimitParams);
+      // console.log(totalPages);
+      // if (currentPageParams > totalPages) {
+      //   toast.error("We're sorry, there are no more posts to load");
+      // }
+
+      // const res = await getFilteredRequest(currentPageParams + 1);
+      // console.log(res);
+      // const newPage = currentPageParams + 1;
+    } catch (error) {
+      error.message;
+    }
   };
 
   return (
@@ -125,34 +197,34 @@ export default function Catalog() {
       {loading && <Loader />}
       <div className={css.filtersColumn}>
         {/* <div className={css.locationBox}>
-          <p className={css.locationTitle}>Location</p>
-          <input type="text" className={css.locationInput} />
-        </div>
-        <p className={css.filtersTitle}>Filters</p>
-        <div className={css.vehicleEquipmentContainer}>
-          <p className={css.equipmentTitle}>Vehicle equipment</p>
-          <hr />
-          <ul className={css.filterBlocksContainer}>
-            <li className={css.filterItemBlocks}>AC</li>
-            <li className={css.filterItemBlocks}>Automatic</li>
-            <li className={css.filterItemBlocks}>Kitchen</li>
-            <li className={css.filterItemBlocks}>TV</li>
-            <li className={css.filterItemBlocks}>Bathroom</li>
-          </ul>
-        </div>
-        <div className={css.vehicleTypeContainer}>
-          <p className={css.equipmentTitle}>Vehicle type</p>
-          <hr />
-          <ul className={css.typeBlocksContainer}>
-            <li className={css.filterItemBlocks}>Van</li>
-            <li className={css.filterItemBlocks}>Fully Integrated</li>
-            <li className={css.filterItemBlocks}>Alcove</li>
-          </ul>
-        </div>
-        <button type="submit" className={css.buttonSearch}>
-          Search
-        </button> */}
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+	          <p className={css.locationTitle}>Location</p>
+	          <input type="text" className={css.locationInput} />
+	        </div>
+	        <p className={css.filtersTitle}>Filters</p>
+	        <div className={css.vehicleEquipmentContainer}>
+	          <p className={css.equipmentTitle}>Vehicle equipment</p>
+	          <hr />
+	          <ul className={css.filterBlocksContainer}>
+	            <li className={css.filterItemBlocks}>AC</li>
+	            <li className={css.filterItemBlocks}>Automatic</li>
+	            <li className={css.filterItemBlocks}>Kitchen</li>
+	            <li className={css.filterItemBlocks}>TV</li>
+	            <li className={css.filterItemBlocks}>Bathroom</li>
+	          </ul>
+	        </div>
+	        <div className={css.vehicleTypeContainer}>
+	          <p className={css.equipmentTitle}>Vehicle type</p>
+	          <hr />
+	          <ul className={css.typeBlocksContainer}>
+	            <li className={css.filterItemBlocks}>Van</li>
+	            <li className={css.filterItemBlocks}>Fully Integrated</li>
+	            <li className={css.filterItemBlocks}>Alcove</li>
+	          </ul>
+	        </div>
+	        <button type="submit" className={css.buttonSearch}>
+	          Search
+	        </button> */}
+        <Formik initialValues={filter} onSubmit={handleSubmit}>
           <Form>
             <div className={css.locationBox}>
               <p className={css.locationTitle}>Location</p>
@@ -310,61 +382,76 @@ export default function Catalog() {
       </div>
 
       {currentFetchData.length > 0 && (
-        <ul className={css.catalogContainer}>
-          {currentFetchData.map(param => (
-            //   setCaravanId(id),
-            <li key={param.id} className={css.catalogItem}>
-              <div className={css.imgContainer}>
-                <img
-                  src={param.gallery[0].thumb}
-                  alt="photo"
-                  className={css.catalogPhoto}
-                  width="292"
-                  height="320"
-                />
-              </div>
-              <div className={css.detailsContainer}>
-                <div className={css.namePrice}>
-                  <div className={css.priceName}>
-                    <p className={css.nameTitle}>{param.name}</p>
-                    <p className={css.priceBlock}>
-                      €{param.price}.00{' '}
-                      <span>
-                        <BsSuitHeart />
-                      </span>
-                    </p>
-                  </div>
-                  <div className={css.ratingLocation}>
-                    <p className={css.ratingContainer}>
-                      <span>
-                        <svg className={css.ratingStar}>
-                          <use xlinkHref="/img/symbol-defs.svg#icon-Rating-active"></use>
-                        </svg>
-                      </span>
-                      {param.rating}{' '}
-                      <span>({param.reviews.length}Reviews)</span>
-                    </p>
-                    <p>{param.location}</p>
-                  </div>
+        <div>
+          <ul className={css.catalogContainer}>
+            {currentFetchData.map(param => (
+              //   setCaravanId(id),
+              <li key={param.id} className={css.catalogItem}>
+                <div className={css.imgContainer}>
+                  <img
+                    src={param.gallery[0].thumb}
+                    alt="photo"
+                    className={css.catalogPhoto}
+                    width="292"
+                    height="320"
+                  />
                 </div>
+                <div className={css.detailsContainer}>
+                  <div className={css.namePrice}>
+                    <div className={css.priceName}>
+                      <p className={css.nameTitle}>{param.name}</p>
+                      <p className={css.priceBlock}>
+                        €{param.price}.00{' '}
+                        <span>
+                          <BsSuitHeart />
+                        </span>
+                      </p>
+                    </div>
+                    <div className={css.ratingLocation}>
+                      <p className={css.ratingContainer}>
+                        <span>
+                          <svg className={css.ratingStar}>
+                            <use xlinkHref="/img/symbol-defs.svg#icon-Rating-active"></use>
+                          </svg>
+                        </span>
+                        {param.rating}{' '}
+                        <span>({param.reviews.length}Reviews)</span>
+                      </p>
+                      <p>{param.location}</p>
+                    </div>
+                  </div>
 
-                <div>
-                  <p className={css.descriptionText}>{param.description}</p>
+                  <div>
+                    <p className={css.descriptionText}>{param.description}</p>
+                  </div>
+                  <div>
+                    <CharacteristicsIcons details={param} />
+                  </div>
+                  <button
+                    type="submit"
+                    className={css.buttonSearchCatalog}
+                    onClick={() => showMoreBtn(param.id)}
+                  >
+                    Show more
+                  </button>
                 </div>
-                <div>
-                  <CharacteristicsIcons details={param} />
-                </div>
-                <button
-                  type="submit"
-                  className={css.buttonSearchCatalog}
-                  onClick={() => showMoreBtn(param.id)}
-                >
-                  Show more
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
+              </li>
+            ))}
+          </ul>
+          {!currentTogglerState && (
+            <div className={css.loadMoreContainer}>
+              {' '}
+              <button
+                type="button"
+                className={css.buttonLoadMore}
+                onClick={handleLoadMore}
+              >
+                Load more
+              </button>
+            </div>
+          )}
+          ;
+        </div>
       )}
       <Toaster />
     </div>

@@ -5,9 +5,20 @@ import { configureStore } from "@reduxjs/toolkit";
 export const initialState = {
 	data: {
 		items: [],
+		totalItems: false,
 	},
 	filters: {
-		status: {},
+		status: {
+			location: '',
+			AC: '',
+			transmission: '',
+			kitchen: '',
+			TV: '',
+			bathroom: '',
+			form: '',
+			limit: 5,
+			page: 1,
+		},
 	},
 	details: {
 		items: null,
@@ -23,9 +34,26 @@ const rootReducer = (state = initialState, action) => {
 				...state,
 				data: {
 					...state.data,
-					items: action.payload,
+					items: [
+						...state.data.items,
+						...action.payload.filter(
+							newItem => !state.data.items.some(existingItem => existingItem.id === newItem.id)
+						),
+					],
 				},
 			};
+
+		case 'data/toggler': // Переключение значения
+			return {
+				...state,
+				data: {
+					...state.data,
+					totalItems: !state.toggler,
+				},
+
+			};
+
+
 		case 'details/addDetails':
 			return {
 				...state,
@@ -42,6 +70,18 @@ const rootReducer = (state = initialState, action) => {
 					status: action.payload,
 				},
 			};
+		case 'filters/addMorePage':
+			return {
+				...state,
+				filters: {
+					...state.filters,
+					status: {
+						...state.filters.status, // Сохраняем все остальные поля status
+						page: action.payload, // Обновляем только поле page
+					},
+				},
+			};
+
 		default:
 			return state;
 	}

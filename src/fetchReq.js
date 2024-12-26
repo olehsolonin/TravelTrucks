@@ -2,11 +2,16 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
 
+
+
+
+
 axios.defaults.baseURL = 'https://66b1f8e71ca8ad33d4f5f63e.mockapi.io/campers';
 
-export const fetchCatalog = async () => {
+export const fetchCatalog = async (filter) => {
+	const params = new URLSearchParams(filter);
 	// const response = await axios.get(`/photos?page=1&query=${searchReq}`);
-	const response = await axios.get();
+	const response = await axios.get(`?${params}`);
 	return response.data;
 
 };
@@ -18,8 +23,10 @@ export const getOneCarDetails = async (id) => {
 };
 
 export const getFilteredRequest = async (filters) => {
+
+
 	try {
-		console.log('Filters:', filters); // Проверка структуры
+		// console.log('Filters:', filters); // Проверка структуры
 		// const safeFilters = { ...filters };
 		const cleanFilters = Object.fromEntries(
 			Object.entries(filters).filter(([_, value]) => value != null && value !== '')

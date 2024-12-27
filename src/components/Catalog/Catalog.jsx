@@ -61,6 +61,20 @@ export default function Catalog() {
     };
   };
 
+  const resetFiltersAction = resetFilterSettings => {
+    return {
+      type: 'filters/resetFilters/addFilters',
+      payload: resetFilterSettings,
+    };
+  };
+
+  const resetCatalogItems = () => {
+    return {
+      type: 'data/deleteCatalog',
+      payload: [],
+    };
+  };
+
   // створюємо dispatc для подальшої відправки екнешнів
 
   const dispatch = useDispatch();
@@ -109,6 +123,8 @@ export default function Catalog() {
   ]);
 
   const handleSubmit = async (values, actions) => {
+    dispatch(resetFiltersAction(resetFilterSettings));
+    dispatch(resetCatalogItems());
     try {
       console.log(values);
 
@@ -124,12 +140,7 @@ export default function Catalog() {
       //  console.log(filtersString);
       setLoading(true);
 
-      const res = await getFilteredRequest(
-        modifiedValues,
-        currentLimitParams,
-        currentPageParams,
-        currentTogglerState
-      );
+      const res = await getFilteredRequest(modifiedValues);
       console.log(res.items);
       console.log(res.total);
       dispatch(getCatalog(res.items));
@@ -157,17 +168,17 @@ export default function Catalog() {
   const FullyIntegratedId = useId();
   const AlcoveId = useId();
 
-  //   const initialValues = {
-  //     location: '',
-  //     AC: '',
-  //     transmission: '',
-  //     kitchen: '',
-  //     TV: '',
-  //     bathroom: '',
-  //     form: '',
-  //     limit: 5,
-  //     page: 1,
-  //   };
+  const resetFilterSettings = {
+    location: '',
+    AC: '',
+    transmission: '',
+    kitchen: '',
+    TV: '',
+    bathroom: '',
+    form: '',
+    limit: 5,
+    page: 1,
+  };
 
   const handleLoadMore = () => {
     try {
@@ -196,34 +207,6 @@ export default function Catalog() {
     <div className={css.mainCatalogContainer}>
       {loading && <Loader />}
       <div className={css.filtersColumn}>
-        {/* <div className={css.locationBox}>
-	          <p className={css.locationTitle}>Location</p>
-	          <input type="text" className={css.locationInput} />
-	        </div>
-	        <p className={css.filtersTitle}>Filters</p>
-	        <div className={css.vehicleEquipmentContainer}>
-	          <p className={css.equipmentTitle}>Vehicle equipment</p>
-	          <hr />
-	          <ul className={css.filterBlocksContainer}>
-	            <li className={css.filterItemBlocks}>AC</li>
-	            <li className={css.filterItemBlocks}>Automatic</li>
-	            <li className={css.filterItemBlocks}>Kitchen</li>
-	            <li className={css.filterItemBlocks}>TV</li>
-	            <li className={css.filterItemBlocks}>Bathroom</li>
-	          </ul>
-	        </div>
-	        <div className={css.vehicleTypeContainer}>
-	          <p className={css.equipmentTitle}>Vehicle type</p>
-	          <hr />
-	          <ul className={css.typeBlocksContainer}>
-	            <li className={css.filterItemBlocks}>Van</li>
-	            <li className={css.filterItemBlocks}>Fully Integrated</li>
-	            <li className={css.filterItemBlocks}>Alcove</li>
-	          </ul>
-	        </div>
-	        <button type="submit" className={css.buttonSearch}>
-	          Search
-	        </button> */}
         <Formik initialValues={filter} onSubmit={handleSubmit}>
           <Form>
             <div className={css.locationBox}>

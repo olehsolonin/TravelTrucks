@@ -43,6 +43,15 @@ const rootReducer = (state = initialState, action) => {
 				},
 			};
 
+		case 'data/deleteCatalog':
+			return {
+				...state,
+				data: {
+					...state.data,
+					items: action.payload,
+				},
+			};
+
 		case 'data/toggler': // Переключение значения
 			return {
 				...state,
@@ -81,6 +90,16 @@ const rootReducer = (state = initialState, action) => {
 					},
 				},
 			};
+
+		case 'filters/resetFilters':
+			return {
+				...state,
+				filters: {
+					...state.filters,
+					status: action.payload,
+				},
+			};
+
 
 		default:
 			return state;

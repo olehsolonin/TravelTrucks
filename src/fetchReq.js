@@ -29,9 +29,11 @@ export const getFilteredRequest = async (filters) => {
 		// console.log('Filters:', filters); // Проверка структуры
 		// const safeFilters = { ...filters };
 		const cleanFilters = Object.fromEntries(
-			Object.entries(filters).filter(([_, value]) => value != null && value !== '')
+			Object.entries(filters).filter(([_, value]) => value != null && value !== '' && value != false)
 		);
 		console.log(cleanFilters);
+
+		toast.dismiss();
 
 
 		const response = await axios.get('/', { params: cleanFilters });

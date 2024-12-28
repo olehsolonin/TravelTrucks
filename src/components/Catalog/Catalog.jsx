@@ -63,7 +63,7 @@ export default function Catalog() {
 
   const resetFiltersAction = resetFilterSettings => {
     return {
-      type: 'filters/resetFilters/addFilters',
+      type: 'filters/resetFilters',
       payload: resetFilterSettings,
     };
   };
@@ -83,12 +83,7 @@ export default function Catalog() {
     async function getAllCatalog() {
       try {
         //   setLoading(true);
-        const res = await getFilteredRequest(
-          filter,
-          currentLimitParams,
-          currentPageParams,
-          currentTogglerState
-        );
+        const res = await getFilteredRequest(filter);
         console.log(res.items);
         console.log(res.total);
         const totalItems = res.total;
@@ -99,10 +94,6 @@ export default function Catalog() {
           //  toast.error("We're sorry, there are no more posts to load");
           dispatch(changeToggler(currentTogglerState));
         }
-        // використовуємо діспатч і відправляємо екшен в стор для обробки редюсером.
-        //   dispatch(getCatalog(res.items));
-        //   setLoading(false);
-        //   toast.success('The request is successful, the data are loading)');
 
         return dispatch(getCatalog(res.items));
       } catch (error) {
@@ -125,6 +116,7 @@ export default function Catalog() {
   const handleSubmit = async (values, actions) => {
     dispatch(resetFiltersAction(resetFilterSettings));
     dispatch(resetCatalogItems());
+    console.log(actions);
     try {
       console.log(values);
 
@@ -145,8 +137,11 @@ export default function Catalog() {
       console.log(res.total);
       dispatch(getCatalog(res.items));
       actions.resetForm();
+      actions.setTouched({});
+      actions.setValues(resetFilterSettings);
       console.log(values);
       setLoading(false);
+      // dispatch(resetFiltersAction(resetFilterSettings));
 
       return res.items;
     } catch (error) {
@@ -155,6 +150,9 @@ export default function Catalog() {
     } finally {
       setLoading(false);
       actions.resetForm();
+      actions.setTouched({});
+      actions.setValues(resetFilterSettings);
+      // dispatch(resetFiltersAction(resetFilterSettings));
     }
   };
 
@@ -433,7 +431,6 @@ export default function Catalog() {
               </button>
             </div>
           )}
-          ;
         </div>
       )}
       <Toaster />

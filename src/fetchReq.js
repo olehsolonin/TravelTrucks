@@ -37,7 +37,7 @@ export const getFilteredRequest = async (filters) => {
 
 
 		const response = await axios.get('/', { params: cleanFilters });
-		toast.success('The request is successful, the data are loading)');
+		// toast.success('The request is successful, the data are loading)');
 		return response.data;
 	} catch (error) {
 		console.error('Error fetching filtered data:', error);

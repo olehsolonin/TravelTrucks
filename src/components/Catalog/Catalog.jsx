@@ -1,5 +1,5 @@
 import { useEffect, useState, useId } from 'react';
-import { fetchCatalog } from '../../fetchReq.js';
+// import { fetchCatalog } from '../../fetchReq.js';
 import css from '../Catalog/Catalog.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import CharacteristicsIcons from '../CharacteristicsIcons/CharacteristicsIcons.jsx';
 import { BsSuitHeart } from 'react-icons/bs';
 import { BsWind } from 'react-icons/bs';
+import { BsMap } from 'react-icons/bs';
 
 export default function Catalog() {
   const navigate = useNavigate();
@@ -398,7 +399,12 @@ export default function Catalog() {
                         {param.rating}{' '}
                         <span>({param.reviews.length}Reviews)</span>
                       </p>
-                      <p>{param.location}</p>
+                      <p className={css.mapLocation}>
+                        <span>
+                          <BsMap />
+                        </span>
+                        {param.location}
+                      </p>
                     </div>
                   </div>
 

@@ -8,6 +8,7 @@ import css from './TravelTruckDetails.module.css';
 import { Formik, Form, Field } from 'formik';
 import toast, { Toaster } from 'react-hot-toast';
 import { FeedbackSchema } from '../../FeedbackSchema.js';
+import { BsMap } from 'react-icons/bs';
 
 export default function TravelTruckDetails() {
   const { id } = useParams();
@@ -73,13 +74,23 @@ export default function TravelTruckDetails() {
           </div>
           <div className={css.ratingLocation}>
             <div className={css.ratingPart}>
-              <p>
+              <p className={css.ratingContainer}>
+                <span>
+                  <svg className={css.ratingStar}>
+                    <use xlinkHref="/img/symbol-defs.svg#icon-Rating-active"></use>
+                  </svg>
+                </span>
                 {allDetails.rating}{' '}
                 <span>({allDetails.reviews?.length || 0} Reviews)</span>
               </p>
-              <p>{allDetails.location}</p>
+              <p className={css.mapLocation}>
+                <span>
+                  <BsMap />
+                </span>
+                {allDetails.location}
+              </p>
             </div>
-            <p>{allDetails.price}</p>
+            <p className={css.priceBlock}>€{allDetails.price}.00 </p>
           </div>
         </div>
       </div>

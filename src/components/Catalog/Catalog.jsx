@@ -2,7 +2,7 @@ import { useEffect, useState, useId } from 'react';
 // import { fetchCatalog } from '../../fetchReq.js';
 import css from '../Catalog/Catalog.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import { getFilteredRequest } from '../../fetchReq.js';
 import Loader from '../Loader/Loader.jsx';
@@ -15,6 +15,7 @@ import { BsMap } from 'react-icons/bs';
 export default function Catalog() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams(); // Используем useSearchParams для управления строкой запроса.
 
   // роблю навігацію з загального каталогу, на сторінку конкретного авто
   const showMoreBtn = id => {
@@ -55,10 +56,31 @@ export default function Catalog() {
     };
   };
 
-  const changeToggler = currentToggler => {
+  const restartPageNumber = () => {
     return {
-      type: 'data/toggler',
-      payload: currentToggler,
+      type: 'filters/pageOne',
+      payload: 1,
+    };
+  };
+
+  //   const changeToggler = currentToggler => {
+  //     return {
+  //       type: 'data/toggler',
+  //       payload: currentToggler,
+  //     };
+  //   };
+
+  const buttonOn = () => {
+    return {
+      type: 'data/buttonOn',
+      payload: false,
+    };
+  };
+
+  const buttonOff = () => {
+    return {
+      type: 'data/buttonOff',
+      payload: true,
     };
   };
 
@@ -88,15 +110,14 @@ export default function Catalog() {
         console.log(res.items);
         console.log(res.total);
         const totalItems = res.total;
-        const totalPages = Math.ceil(totalItems / currentLimitParams);
+        const totalPages = Math.ceil(totalItems / 5);
         console.log(totalPages);
-        console.log(currentTogglerState);
-        if (currentPageParams >= totalPages) {
-          //  toast.error("We're sorry, there are no more posts to load");
-          dispatch(changeToggler(currentTogglerState));
-        }
-
-        return dispatch(getCatalog(res.items));
+        //   console.log(totalPages);
+        //   console.log(currentTogglerState);
+        //   if (currentPageParams >= totalPages) {
+        //     dispatch(changeToggler(currentTogglerState));
+        //   }
+        dispatch(getCatalog(res.items));
       } catch (error) {
         console.log(error);
         toast.error('Ooops, some error, refresh the page...');
@@ -106,54 +127,73 @@ export default function Catalog() {
     }
 
     getAllCatalog();
-  }, [
-    dispatch,
-    filter,
-    currentLimitParams,
-    currentPageParams,
-    currentTogglerState,
-  ]);
+  }, []);
 
   const handleSubmit = async (values, actions) => {
+    // тут, в modifiedValues додав перевірку на активацію і зміну значення поля values.transmission, щоб при активації була зміна знеачененя на automatic
+    const modifiedValues = {
+      ...values,
+      transmission: values.transmission ? 'automatic' : '',
+    };
+    console.log(values);
+    console.log(modifiedValues);
+    console.log(filter);
+
+    // Сброс фильтров и состояния
     dispatch(resetFiltersAction(resetFilterSettings));
     dispatch(resetCatalogItems());
-    console.log(actions);
+    dispatch(buttonOn());
+
+    // Формируем чистые фильтры, исключая пустые значения
+    const cleanFilters = Object.fromEntries(
+      Object.entries(modifiedValues).filter(
+        ([_, value]) => value != null && value !== '' && value !== false
+      )
+    );
+
+    // Здесь добавляем или изменяем параметр 'page' в cleanFilters
+    cleanFilters.page = 1; // Сбрасываем номер страницы на 1
+
+    console.log(cleanFilters);
+
+    // Отправляем обновленные фильтры в Redux
+    dispatch(addFilters(cleanFilters));
+
     try {
-      console.log(values);
-
-      // тут, в modifiedValues додав перевірку на активацію і зміну значення поля values.transmission, щоб при активації була зміна знеачененя на automatic //
-      const modifiedValues = {
-        ...values,
-        transmission: values.transmission ? 'automatic' : '',
-      };
-      console.log(values);
-      dispatch(addFilters(modifiedValues));
-
-      //  const filtersString = JSON.stringify(values);
-      //  console.log(filtersString);
       setLoading(true);
+      setSearchParams(cleanFilters);
 
-      const res = await getFilteredRequest(modifiedValues);
+      // Получаем обновленные данные с фильтрами
+      const res = await getFilteredRequest(cleanFilters);
       console.log(res.items);
       console.log(res.total);
+
+      const totalItems = res.total;
+      const totalPages = Math.ceil(totalItems / 5);
+      console.log(totalPages);
+      // const newPageData = Number(currentPageParams) + 1;
+      // console.log(newPageData);
+      if (Number(currentPageParams) >= totalPages) {
+        dispatch(buttonOff());
+      }
+      // console.log(totalPages);
+
+      // Диспатчим данные в Redux
       dispatch(getCatalog(res.items));
       actions.resetForm();
       actions.setTouched({});
       actions.setValues(resetFilterSettings);
-      console.log(values);
       setLoading(false);
-      // dispatch(resetFiltersAction(resetFilterSettings));
 
       return res.items;
     } catch (error) {
       console.log(error);
       actions.resetForm();
+      dispatch(resetFiltersAction(resetFilterSettings));
+      setSearchParams({});
     } finally {
       setLoading(false);
       actions.resetForm();
-      actions.setTouched({});
-      actions.setValues(resetFilterSettings);
-      // dispatch(resetFiltersAction(resetFilterSettings));
     }
   };
 
@@ -179,26 +219,36 @@ export default function Catalog() {
     page: 1,
   };
 
-  const handleLoadMore = () => {
+  const handleLoadMore = async () => {
     try {
       console.log('salam brat');
-      dispatch(newPagePart(currentPageParams));
-      console.log(filter);
-      // const res = await getFilteredRequest(filter);
-      // console.log(res.items);
-      // console.log(res.total);
-      // const totalItems = res.total;
-      // const totalPages = Math.ceil(totalItems / currentLimitParams);
-      // console.log(totalPages);
-      // if (currentPageParams > totalPages) {
-      //   toast.error("We're sorry, there are no more posts to load");
-      // }
+      const newPageData = Number(currentPageParams) + 1;
+      console.log('Новое значение страницы:', newPageData);
 
-      // const res = await getFilteredRequest(currentPageParams + 1);
-      // console.log(res);
-      // const newPage = currentPageParams + 1;
+      // Диспатчим новый параметр
+      dispatch(newPagePart(currentPageParams));
+
+      // Формируем обновлённый фильтр
+      const updatedFilter = { ...filter, page: newPageData };
+      console.log('Обновлённый фильтр:', updatedFilter);
+      setSearchParams(updatedFilter);
+
+      // Используем обновлённый фильтр для запроса
+      const res = await getFilteredRequest(updatedFilter);
+      console.log(res.items);
+      console.log(res.total);
+
+      // Обновляем каталог
+      dispatch(getCatalog(res.items));
+
+      // Проверяем, достигли ли конца
+      const totalItems = res.total;
+      const totalPages = Math.ceil(totalItems / currentLimitParams);
+      if (newPageData >= totalPages) {
+        dispatch(buttonOff());
+      }
     } catch (error) {
-      error.message;
+      console.error('Ошибка:', error);
     }
   };
 

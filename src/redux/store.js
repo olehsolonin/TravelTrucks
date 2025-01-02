@@ -61,6 +61,24 @@ const rootReducer = (state = initialState, action) => {
 				},
 
 			};
+		case 'data/buttonOn': // Переключение значения
+			return {
+				...state,
+				data: {
+					...state.data,
+					totalItems: action.payload,
+				},
+
+			};
+		case 'data/buttonOff': // Переключение значения
+			return {
+				...state,
+				data: {
+					...state.data,
+					totalItems: action.payload,
+				},
+
+			};
 
 
 		case 'details/addDetails':
@@ -80,6 +98,17 @@ const rootReducer = (state = initialState, action) => {
 				},
 			};
 		case 'filters/addMorePage':
+			return {
+				...state,
+				filters: {
+					...state.filters,
+					status: {
+						...state.filters.status, // Сохраняем все остальные поля status
+						page: action.payload, // Обновляем только поле page
+					},
+				},
+			};
+		case 'filters/pageOne':
 			return {
 				...state,
 				filters: {

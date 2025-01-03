@@ -6,7 +6,7 @@ export default function Features() {
   const allDetailsById = useSelector(state => state.details.items);
   console.log(allDetailsById);
   return (
-    <div>
+    <div className={css.featuresBlock}>
       <CharacteristicsIcons details={allDetailsById} />
       <h2 className={css.vehicleTitle}>Vehicle details</h2>
       <hr />

@@ -99,10 +99,10 @@
 
 .leftConrtainer {
   border-radius: 10px;
-  padding: 44px 52px;
+  /* padding: 44px 52px; */
   width: 631px;
   height: 588px;
-  background: #f7f7f7;
+  /* background: #f7f7f7; */
 }
 
 .vehicleTitle {
@@ -242,4 +242,44 @@
   font-size: 24px;
   line-height: 133%;
   color: #101828;
+}
+
+.linksContainer {
+  display: flex;
+  gap: 40px;
+}
+
+.detailsList {
+  display: flex;
+  gap: 40px; /* Расстояние между элементами */
+}
+
+.detailsLink {
+  list-style: none;
+}
+
+.linksToDetails {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+  color: #101828;
+  text-decoration: none;
+  position: relative;
+}
+
+.linksToDetails.active {
+  color: #e44848; /* Цвет текста активной ссылки */
+}
+
+.linksToDetails.active::after {
+  content: '';
+  display: block;
+  width: 85px; /* Ширина линии */
+  height: 5px; /* Высота линии */
+  background-color: #e44848; /* Цвет линии */
+  margin-top: 24px; /* Отступ сверху */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }

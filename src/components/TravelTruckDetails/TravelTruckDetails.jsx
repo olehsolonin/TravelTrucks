@@ -113,14 +113,35 @@ export default function TravelTruckDetails() {
       </div>
       <div className={css.moreInfoDetails}>
         <nav className={css.linksContainer}>
-          <NavLink to="features" className={css.linksToDetails}>
-            Features
-          </NavLink>
-          <NavLink to="reviews" className={css.linksToDetails}>
-            Reviews
-          </NavLink>
+          <ul className={css.detailsList}>
+            <li className={css.detailsLink}>
+              <NavLink
+                to="features"
+                className={({ isActive }) =>
+                  isActive
+                    ? `${css.linksToDetails} ${css.active}`
+                    : css.linksToDetails
+                }
+              >
+                Features
+              </NavLink>
+            </li>
+            <li className={css.detailsLink}>
+              <NavLink
+                to="reviews"
+                className={({ isActive }) =>
+                  isActive
+                    ? `${css.linksToDetails} ${css.active}`
+                    : css.linksToDetails
+                }
+              >
+                Reviews
+              </NavLink>
+            </li>
+          </ul>
         </nav>
       </div>
+
       <hr className={css.line} />
       <div className={css.orderFormConrtainer}>
         <div className={css.leftConrtainer}>

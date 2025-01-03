@@ -50,3 +50,11 @@
   text-align: center;
   color: #101828;
 }
+
+.featuresBlock {
+  border-radius: 10px;
+  padding: 44px 52px;
+  width: 631px;
+  height: 588px;
+  background: #f7f7f7;
+}

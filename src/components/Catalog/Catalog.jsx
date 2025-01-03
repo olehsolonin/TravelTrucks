@@ -173,7 +173,7 @@ export default function Catalog() {
       console.log(totalPages);
       // const newPageData = Number(currentPageParams) + 1;
       // console.log(newPageData);
-      if (Number(currentPageParams) >= totalPages) {
+      if (Number(cleanFilters.page) >= totalPages) {
         dispatch(buttonOff());
       }
       // console.log(totalPages);
@@ -194,6 +194,10 @@ export default function Catalog() {
     } finally {
       setLoading(false);
       actions.resetForm();
+      actions.resetForm({
+        values: resetFilterSettings, // Установите начальные значения
+        touched: {}, // Сбрасываем затронутость
+      });
     }
   };
 

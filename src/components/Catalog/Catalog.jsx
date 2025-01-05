@@ -16,6 +16,11 @@ export default function Catalog() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams(); // Используем useSearchParams для управления строкой запроса.
+  const [favorites, setFavorites] = useState(() => {
+    const storedFavorites = localStorage.getItem('favorites');
+    return storedFavorites ? JSON.parse(storedFavorites) : {};
+  });
+
   // створюємо dispatc для подальшої відправки екнешнів
   const dispatch = useDispatch();
 
@@ -290,6 +295,20 @@ export default function Catalog() {
     }
   };
 
+  const manualSelection = id => {
+    setFavorites(prev => {
+      const updated = { ...prev, [id]: !prev[id] };
+
+      // Убираем из LocalStorage, если значение false
+      if (!updated[id]) {
+        delete updated[id];
+      }
+
+      localStorage.setItem('favorites', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
   return (
     <div className={css.mainCatalogContainer}>
       {loading && <Loader />}
@@ -486,7 +505,12 @@ export default function Catalog() {
                       <p className={css.nameTitle}>{param.name}</p>
                       <p className={css.priceBlock}>
                         €{param.price}.00{' '}
-                        <span>
+                        <span
+                          className={`${css.favouriteHeart} ${
+                            favorites[param.id] ? css.activeHeart : ''
+                          }`}
+                          onClick={() => manualSelection(param.id)}
+                        >
                           <BsSuitHeart />
                         </span>
                       </p>

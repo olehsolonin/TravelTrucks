@@ -333,3 +333,11 @@ hr {
   gap: 4px;
   align-items: center;
 }
+
+.favouriteHeart {
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s;
+}
+.activeHeart {
+  color: #d84343;
+}

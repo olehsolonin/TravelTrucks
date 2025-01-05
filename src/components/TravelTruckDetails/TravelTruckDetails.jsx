@@ -9,6 +9,9 @@ import { Formik, Form, Field } from 'formik';
 import toast, { Toaster } from 'react-hot-toast';
 import { FeedbackSchema } from '../../FeedbackSchema.js';
 import { BsMap } from 'react-icons/bs';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import './Datepicker.css';
 
 export default function TravelTruckDetails() {
   const { id } = useParams();
@@ -159,44 +162,53 @@ export default function TravelTruckDetails() {
             onSubmit={handleSubmit}
             validationSchema={FeedbackSchema}
           >
-            <Form>
-              <div className={css.fieldsContainer}>
-                <Field
-                  type="text"
-                  name="username"
-                  placeholder="Name*"
-                  className={css.dataField}
-                />
+            {({ setFieldValue, values }) => (
+              <Form>
+                <div className={css.fieldsContainer}>
+                  <Field
+                    type="text"
+                    name="username"
+                    placeholder="Name*"
+                    className={css.dataField}
+                  />
 
-                <Field
-                  type="email"
-                  name="email"
-                  placeholder="Email*"
-                  className={css.dataField}
-                />
-                <Field
-                  type="date"
-                  name="date"
-                  placeholder="Booking date*"
-                  className={css.dataField}
-                />
-                <Field
-                  as="textarea"
-                  name="usertext"
-                  cols="20"
-                  rows="5"
-                  placeholder="Comment"
-                  className={`${css.dataField} ${css.mod}`}
-                />
-              </div>
+                  <Field
+                    type="email"
+                    name="email"
+                    placeholder="Email*"
+                    className={css.dataField}
+                  />
 
-              <div className={css.buttonContainer}>
-                <button type="submit" className={css.sendButton}>
-                  Send
-                </button>
-              </div>
-            </Form>
+                  {/* Замена Field type="date" на React Datepicker */}
+                  <div className={css.dateFieldContainer}>
+                    <DatePicker
+                      selected={values.date ? new Date(values.date) : null}
+                      onChange={date => setFieldValue('date', date)}
+                      dateFormat="yyyy-MM-dd"
+                      placeholderText="Booking date*"
+                      className={`${css.dataField} ${css.datePicker}`}
+                    />
+                  </div>
+
+                  <Field
+                    as="textarea"
+                    name="usertext"
+                    cols="20"
+                    rows="5"
+                    placeholder="Comment"
+                    className={`${css.dataField} ${css.mod}`}
+                  />
+                </div>
+
+                <div className={css.buttonContainer}>
+                  <button type="submit" className={css.sendButton}>
+                    Send
+                  </button>
+                </div>
+              </Form>
+            )}
           </Formik>
+
           <Toaster />
         </div>
       </div>

@@ -1,0 +1,116 @@
+/* Базовые стили для React Datepicker */
+.react-datepicker {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* Заголовок календаря */
+.react-datepicker__header {
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Навигационные кнопки */
+.react-datepicker__navigation {
+  top: 15px;
+  line-height: 1.7;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.react-datepicker__navigation--previous {
+  left: 10px;
+}
+
+.react-datepicker__navigation--next {
+  right: 10px;
+}
+
+/* Стили для дней недели */
+.react-datepicker__day-name {
+  color: #999;
+  font-weight: bold;
+  margin: 0.2em;
+}
+
+.react-datepicker__day {
+  margin: 0.2em;
+  color: #333;
+  display: inline-block;
+  width: 2.5em;
+  line-height: 2.5em;
+  text-align: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Стили для выбранной даты */
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Стили для сегодняшнего дня */
+.react-datepicker__day--today {
+  border: 1px solid #007bff;
+  background-color: #e9f5ff;
+  color: #007bff;
+}
+
+/* Стили для выходных */
+.react-datepicker__day--weekend {
+  color: #d9534f;
+}
+
+/* Стили для недоступных дат */
+.react-datepicker__day--disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Контейнер ввода */
+.react-datepicker-wrapper {
+  display: block;
+}
+
+.react-datepicker__input-container input {
+  width: 100%;
+  padding: 18px 337px 18px 18px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.react-datepicker__input-container input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Анимация появления */
+.react-datepicker__month-container {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

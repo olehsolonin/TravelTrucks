@@ -21,11 +21,11 @@ export default function Catalog() {
 
   const resetFilterSettings = {
     location: '',
-    AC: false,
-    transmission: false,
-    kitchen: false,
-    TV: false,
-    bathroom: false,
+    AC: '',
+    transmission: '',
+    kitchen: '',
+    TV: '',
+    bathroom: '',
     form: '',
     limit: 5,
     page: 1,

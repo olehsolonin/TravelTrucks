@@ -131,6 +131,7 @@ export default function Catalog() {
         navigate(`/catalog?limit=5&page=1`);
         dispatch(resetFiltersAction(resetFilterSettings));
         dispatch(resetCatalogItems());
+        dispatch(buttonOn());
       }
       try {
         //   setLoading(true);

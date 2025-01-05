@@ -49,7 +49,7 @@ export default function App() {
           <NavLink to="/" className={buildLinkClass}>
             Home
           </NavLink>
-          <NavLink to="/catalog" className={buildLinkClass}>
+          <NavLink to="/catalog?limit=5&page=1" className={buildLinkClass}>
             Сatalog
           </NavLink>
         </nav>

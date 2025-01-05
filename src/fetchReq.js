@@ -26,16 +26,6 @@ export const getFilteredRequest = async (filters) => {
 
 
 	try {
-		// console.log('Filters:', filters); // Проверка структуры
-		// const safeFilters = { ...filters };
-		// const cleanFilters = Object.fromEntries(
-		// 	Object.entries(filters).filter(([_, value]) => value != null && value !== '' && value != false)
-		// );
-		// console.log(cleanFilters);
-
-		// toast.dismiss();
-
-
 		const response = await axios.get('/', { params: filters });
 		// toast.success('The request is successful, the data are loading)');
 		return response.data;

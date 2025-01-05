@@ -3,7 +3,7 @@ import { useEffect, useState, useId } from 'react';
 import css from '../Catalog/Catalog.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, useFormik } from 'formik';
 import { getFilteredRequest } from '../../fetchReq.js';
 import Loader from '../Loader/Loader.jsx';
 import toast, { Toaster } from 'react-hot-toast';
@@ -16,6 +16,26 @@ export default function Catalog() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams(); // Используем useSearchParams для управления строкой запроса.
+  // створюємо dispatc для подальшої відправки екнешнів
+  const dispatch = useDispatch();
+
+  const resetFilterSettings = {
+    location: '',
+    AC: false,
+    transmission: false,
+    kitchen: false,
+    TV: false,
+    bathroom: false,
+    form: '',
+    limit: 5,
+    page: 1,
+  };
+
+  const cleanFiltersReset = Object.fromEntries(
+    Object.entries(resetFilterSettings).filter(
+      ([_, value]) => value != null && value !== '' && value !== false
+    )
+  );
 
   // роблю навігацію з загального каталогу, на сторінку конкретного авто
   const showMoreBtn = id => {
@@ -98,15 +118,23 @@ export default function Catalog() {
     };
   };
 
-  // створюємо dispatc для подальшої відправки екнешнів
-
-  const dispatch = useDispatch();
-
   useEffect(() => {
     async function getAllCatalog() {
+      const cleanFilters = Object.fromEntries(
+        Object.entries(resetFilterSettings).filter(
+          ([_, value]) => value != null && value !== '' && value !== false
+        )
+      );
+      console.log(cleanFilters);
+
+      if (location.pathname === '/catalog') {
+        navigate(`/catalog?limit=5&page=1`);
+        dispatch(resetFiltersAction(resetFilterSettings));
+        dispatch(resetCatalogItems());
+      }
       try {
         //   setLoading(true);
-        const res = await getFilteredRequest(filter);
+        const res = await getFilteredRequest(cleanFilters);
         console.log(res.items);
         console.log(res.total);
         const totalItems = res.total;
@@ -135,7 +163,7 @@ export default function Catalog() {
       ...values,
       transmission: values.transmission ? 'automatic' : '',
     };
-    console.log(values);
+    console.log(typeof values);
     console.log(modifiedValues);
     console.log(filter);
 
@@ -150,6 +178,7 @@ export default function Catalog() {
         ([_, value]) => value != null && value !== '' && value !== false
       )
     );
+    console.log(cleanFilters);
 
     // Здесь добавляем или изменяем параметр 'page' в cleanFilters
     cleanFilters.page = 1; // Сбрасываем номер страницы на 1
@@ -175,14 +204,16 @@ export default function Catalog() {
       // console.log(newPageData);
       if (Number(cleanFilters.page) >= totalPages) {
         dispatch(buttonOff());
+        setSearchParams(cleanFiltersReset);
+        dispatch(resetFiltersAction(resetFilterSettings));
       }
       // console.log(totalPages);
 
       // Диспатчим данные в Redux
       dispatch(getCatalog(res.items));
-      actions.resetForm();
-      actions.setTouched({});
-      actions.setValues(resetFilterSettings);
+      // actions.resetForm();
+      // actions.setTouched({});
+      // actions.setValues(resetFilterSettings);
       setLoading(false);
 
       return res.items;
@@ -190,14 +221,14 @@ export default function Catalog() {
       console.log(error);
       actions.resetForm();
       dispatch(resetFiltersAction(resetFilterSettings));
-      setSearchParams({});
+      setSearchParams(cleanFiltersReset);
     } finally {
       setLoading(false);
-      actions.resetForm();
       actions.resetForm({
-        values: resetFilterSettings, // Установите начальные значения
-        touched: {}, // Сбрасываем затронутость
+        values: resetFilterSettings,
+        touched: {},
       });
+      // setSearchParams({});
     }
   };
 
@@ -211,17 +242,17 @@ export default function Catalog() {
   const FullyIntegratedId = useId();
   const AlcoveId = useId();
 
-  const resetFilterSettings = {
-    location: '',
-    AC: '',
-    transmission: '',
-    kitchen: '',
-    TV: '',
-    bathroom: '',
-    form: '',
-    limit: 5,
-    page: 1,
-  };
+  //   const resetFilterSettings = {
+  //     location: '',
+  //     AC: '',
+  //     transmission: '',
+  //     kitchen: '',
+  //     TV: '',
+  //     bathroom: '',
+  //     form: '',
+  //     limit: 5,
+  //     page: 1,
+  //   };
 
   const handleLoadMore = async () => {
     try {
@@ -250,6 +281,8 @@ export default function Catalog() {
       const totalPages = Math.ceil(totalItems / currentLimitParams);
       if (newPageData >= totalPages) {
         dispatch(buttonOff());
+        setSearchParams(cleanFiltersReset);
+        dispatch(resetFiltersAction(resetFilterSettings));
       }
     } catch (error) {
       console.error('Ошибка:', error);
@@ -260,7 +293,21 @@ export default function Catalog() {
     <div className={css.mainCatalogContainer}>
       {loading && <Loader />}
       <div className={css.filtersColumn}>
-        <Formik initialValues={filter} onSubmit={handleSubmit}>
+        <Formik
+          initialValues={{
+            location: filter.location || '', // Строка по умолчанию
+            AC: filter.AC || false, // Булевое значение по умолчанию
+            transmission: filter.transmission || false,
+            kitchen: filter.kitchen || false,
+            TV: filter.TV || false,
+            bathroom: filter.bathroom || false,
+            form: filter.form || '',
+            limit: filter.limit || 5,
+            page: filter.page || 1,
+          }}
+          enableReinitialize
+          onSubmit={handleSubmit}
+        >
           <Form>
             <div className={css.locationBox}>
               <p className={css.locationTitle}>Location</p>
